@@ -1,0 +1,48 @@
+% **************************************************
+% Document Class Definition
+% **************************************************
+\documentclass[runningheads]{llncs}
+
+\input{config}
+
+\newcommand{\Dtrain}{\mathcal{D}_{\mathit{train}}}
+\newcommand{\Dvalid}{\mathcal{D}_{\mathit{valid}}}
+\newcommand{\Dtest}{\mathcal{D}_{\mathit{test}}}
+\newcommand{\sourceinline}[2][source]{{\scriptsize\textsc{#1:~\cite{#2}}}}
+\newcommand{\source}[2][source]{\null\hfill\sourceinline[#1]{#2}}
+
+% **************************************************
+% Document CONTENT
+% **************************************************
+\begin{document}
+
+% --------------------------
+% Front matter
+% --------------------------
+\input{content/titlepages}
+\input{content/abstract}
+
+% --------------------------
+% Body matter
+% --------------------------
+
+\input{content/chapter-introduction}
+\input{content/chapter-conclusion}
+
+% --------------------------
+% Back matter
+% --------------------------
+{%
+\renewcommand{\bibfont}{\normalfont\small}
+\setlength{\biblabelsep}{5pt}
+\setlength{\bibitemsep}{0.5\baselineskip plus 0.5\baselineskip} % chktex 1
+\setcounter{biburllcpenalty}{9000}
+\setcounter{biburlucpenalty}{9999}
+\printbibliography[nottype=www]
+\printbibliography[heading=subbibliography,title={Webpages},type=www]
+}
+
+% **************************************************
+% End of Document CONTENT
+% **************************************************
+\end{document}
