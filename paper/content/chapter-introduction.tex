@@ -6,4 +6,20 @@
 \pagenumbering{arabic}			% arabic page numbering
 \setcounter{page}{1}			% set page counter
 
-TODO
+With the rise of Big Data applications over the recent years, working with large graph structures also became more important.
+Algorithms like PageRank or spectral clustering are commonly used to analyze the web graph or social networks.
+In order to run such algorithms on large graphs however, optimizations are required.
+
+For this purpose we will specifically look at graph coarsening.
+Coarsening reduces the size of a given graph while preserving its overall structure via some notion of graph similarity that will be defined later.
+Graph algorithms can then be run on the smaller coarsened graph.
+Afterwards the result for the coarsened graph can be iteratively refined to obtain an approximate result for the original graph.
+Figure X illustrates this approach.
+
+This paper gives an introduction to graph coarsening and its effects.
+This introduction consists of three sections, each of which aims to answer one main question:
+\begin{enumerate}
+	\item \textbf{Spectral Graph Theory:} How can the structural properties of a graph be formally described?
+	\item \textbf{Graph Coarsening:} How can the size of a graph be reduced?
+	\item \textbf{Spectral Graph Similarity:} How does graph coarsening affect the structure of a graph and the results of graph algorithms?
+\end{enumerate}
