@@ -1,0 +1,4 @@
+{:ignored-unused-namespaces [clojure.stacktrace
+                             clojure.repl
+                             clojure.pprint
+                             proto-repl.saved-values]}

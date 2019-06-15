@@ -55,11 +55,9 @@
 \usepackage[usenames, dvipsnames, svgnames, table]{xcolor}
 
 \definecolor{schwarz}{HTML}{000000}
-\definecolor{blau}{HTML}{355FB3}
-\definecolor{rot}{HTML}{B33535}
-\definecolor{gruen}{HTML}{3BB335}
-\definecolor{dunkelblau}{HTML}{1E3666}
-\definecolor{hellblau}{HTML}{8ea7d7}
+\definecolor{blau}{HTML}{3F6DB1}
+\definecolor{rot}{HTML}{EE7993}
+\definecolor{gruen}{HTML}{3FB17D}
 
 \usepackage{mathtools}
 \usepackage{bm}
@@ -137,11 +135,3 @@
   {\bibhyperref{\printfield{labelnumber}}}
   {}
   {}
-
-\makeatletter
-\newcounter{rulecount}[section]
-\newcommand{\ruleno}[1]{\ensuremath{r_{#1}}}
-\newcommand{\rulecurrent}{\ruleno{\therulecount}}
-\newcommand{\rulemark}[1]{\refstepcounter{rulecount}(\rulecurrent)\ltx@label{#1}} % chktex 36
-\newcommand{\ruleref}[1]{\ruleno{\ref{#1}}}
-\makeatother
