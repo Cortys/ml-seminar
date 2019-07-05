@@ -6,3 +6,4 @@ pom.xml.asc
 *.class
 .lein-*
 .nrepl-port
+.attach_pid*
