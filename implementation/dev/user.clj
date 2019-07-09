@@ -102,5 +102,3 @@
   (save cos-bars-0)
   (save cos-bars-1)
   (save cos-bars-10))
-
-(save-bars)

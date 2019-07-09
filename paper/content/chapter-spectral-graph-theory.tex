@@ -9,10 +9,10 @@ Graphs are most commonly described in their vertex base, i.e.\@ the strength $w_
 \begin{align*}
 	G :=&\, (\mathcal{V}, \mathcal{E}, W) \text{ with } W \in \mathbb{R}^{N \times N}, N := |\mathcal{V}|
 \end{align*}
-In this paper we will only consider undirected graphs with non-negative real weights.
+In this paper we will only consider undirected graphs with non-negative real weights and without self-loops ($\forall v_i: w_{i i} = 0$).
 
 The core idea of spectral graph theory is to perform a change of basis of $W$ and describe graphs in terms of their so called \textit{spectral base} instead of their \textit{vertex base}.
-To see what this means, we interpret the adjacency matrix $W$ as a linear operator that operates on so called signals $x \in \mathbb{R}^N$.
+To see what this means, we interpret the adjacency/weight matrix $W$ as a linear operator that operates on so called signals $x \in \mathbb{R}^N$.
 A signal $x$ can be interpreted as a function $x: \mathcal{V} \to \mathbb{R}$ that assigns a signal strength to each vertex.
 By applying $Wx$ the given signal strengths $x_i$ are shifted according to the connection strenghts $w_{i j}$ to neighboring vertices $v_j$.
 This interpretation of graphs is very similar to that of Markov chains where signals represent probability distributions.
@@ -140,7 +140,7 @@ vertices with a positive signal strength in $u_2$ are in $\mathcal{V}_+$, the ot
 The so called \textit{spectral clustering} algorithm is based on this relationship.
 Figure~\ref{fig:sgt:graphFourier} shows how the Fiedler vector $u_2$ partitions a graph via the signs of the vertex signal strengths.
 
-As we have just seen, expressing a graph $G$ in terms of the spectrum of its Laplacian $L$ gives us access to graph characteristics, like its overall connectivity.
+As we have just seen, expressing a graph $G$ in terms of the spectrum of its Laplacian $L$ gives us access to graph characteristics like its overall connectivity.
 Similar to how the low-frequency components of the Fourier transform of a function represent the overall shape of that function, the eigenvectors associated to the small eigenvectors of $L$ represent overall characteristics of $G$.
 The details of a Fourier-transformed function or graph are encoded in the high-frequency components, i.e.\@ the eigenvectors associated to large eigenvalues.
 This perspective already hints at how spectral graph analysis might be useful to approximate graphs.
