@@ -23,14 +23,16 @@
   []
   (ctnr/refresh-all :after 'user/start))
 
+;; Helpers:
+
 (defmacro save
-  [type & args]
+  [section type & args]
   `(let [res# (~type ~@args)]
      (cond
        (g/graph? res#)
-       (dot res# ~(str "../paper/data/generated/" type ".dot"))
+       (dot res# ~(str "../paper/data/" section "/" type ".dot"))
        (string? res#)
-       (spit ~(str "../paper/data/generated/" type ".svg") res#))))
+       (spit ~(str "../paper/data/" section "/" type ".svg") res#))))
 
 (defn sample
   [f start end step]
@@ -52,7 +54,7 @@
                           vals)]
     (str start (str/join "\n" bars) end)))
 
-;; Generated:
+;; Generated Graphs:
 
 (defn two-cluster
   ([]
@@ -79,11 +81,14 @@
 
 (defn save-graphs
   []
-  (save small-two-cluster))
+  (save "intro" two-cluster)
+  (save "intro" small-two-cluster))
+
+;; Generated Bar Charts:
 
 (defn cos-sample
   [n freq]
-  (sample #(* 200 (- (Math/cos (+ (* 2 Math/PI freq %) 0)))) 0 1 (/ 1 n)))
+  (sample #(* 200 (- (Math/cos (* 2 Math/PI freq %)))) 0 1 (/ 1 n)))
 
 (defn cos-bars-0
   []
@@ -99,6 +104,6 @@
 
 (defn save-bars
   []
-  (save cos-bars-0)
-  (save cos-bars-1)
-  (save cos-bars-10))
+  (save "sgt" cos-bars-0)
+  (save "sgt" cos-bars-1)
+  (save "sgt" cos-bars-10))
