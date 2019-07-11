@@ -34,7 +34,7 @@ Intuitively graph signals can thus be understood as a discretized generalization
 		The bars show the signal strengths $f(t)$ and $x_i$ at the vertices $b_t$ and $b_i$ respectively.
 	}\label{fig:sgt:realGraph}
 \end{figure}
-Figure~\ref{fig:sgt:realGraph} shows that all real functions $f$ can be seen as signals $x$ of the graph described by the real number line\footnote{
+\Cref{fig:sgt:realGraph} shows that all real functions $f$ can be seen as signals $x$ of the graph described by the real number line\footnote{%
 	Technically this is not correct, since $\mathbb{R}$ is continuous whereas all vertex sets $\mathcal{V}$ have to be discrete.
 	To build an intuition for graph signals, this detail can however be ignored.
 }.
@@ -70,7 +70,7 @@ This property of the Fourier transform by itself is not special; in fact there a
 The distinguishing property of ${\{ u_\xi \}}_{\xi \in \mathbb{R}}$, making it useful in many domains, is that it is an \textit{eigenbasis} of the \textit{Laplacian} $\Updelta$, i.e.\@ $\Updelta u_\xi = \lambda_\xi u_\xi$ for the eigenvalue $\lambda_\xi \in \mathbb{R}$.
 The Laplacian is a multi\-dimensional generalization of the second derivative.
 For real-valued functions this boils down to $\Updelta u_\xi = \frac{\partial^2}{\partial t^2} u_\xi = -{(2 \pi \xi)}^2 e^{2 \pi i \xi t}$ with the eigenvalues $\lambda_\xi = {-(2\pi\xi)}^2$ depending solely on the frequency $\xi$.
-The original motivation to express functions in terms of the Laplacian's eigenbasis was to solve the physical heat equation\footnote{
+The original motivation to express functions in terms of the Laplacian's eigenbasis was to solve the physical heat equation\footnote{%
 	More generally the Fourier basis turns out to be meaningful for all \textit{linear time-invariant} (LTI) systems, of which heat equations are only one instance.
 }.
 For this reason it is a useful intuition to think about signals as temperature distributions that will converge to an equilibrium state over time.
@@ -114,7 +114,7 @@ The graph Laplacian represents the same operation, where each point/vertex might
 \end{figure}
 Now that we have defined the graph Laplacian $L$, the graph Fourier basis ${\{ u_k \}}_{1 \leq k \leq N}$ is just the set of eigenvectors of $L$.
 In the rest of this paper we will assume that these eigenvectors $u_k$ are sorted in ascending order w.r.t.\@ their eigenvalues $\lambda_k$, i.e.\@ $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_N$.
-Figure~\ref{fig:sgt:graphFourier} shows how this definition generalizes the Fourier basis from the real number line to an arbitrary graph.
+\Cref{fig:sgt:graphFourier} shows how this definition generalizes the Fourier basis from the real number line to an arbitrary graph.
 The figure also shows that the eigenvalues $\lambda_k$ of the graph Fourier basis encode some notion of frequency, just like they do in the classical Fourier basis.
 Those eigenvalues describe many characteristics of a graph and are called its \textit{spectrum}.
 
@@ -129,7 +129,7 @@ If the spectrum of a graph is known, this fact can be used to quickly determine 
 
 Another meaningful eigenvalue is $\lambda_2$ and its eigenvector $u_2$, also called the \textit{Fiedler value} and \textit{vector} respectively.
 As we have just seen, a Fiedler value of $\lambda_2 = 0$ means that a graph is not connected.
-More generally the Fielder value can be interpreted as a measure of overall graph connectivity\footnote{
+More generally the Fielder value can be interpreted as a measure of overall graph connectivity\footnote{%
 	Formally this measure is called \textit{algebraic connectivity}, as opposed to regular \textit{graph connectivity}, which is defined as $\min_{v_i \in \mathcal{V}} \deg(v_i)$.
 }.
 If there are two clusters of vertices $\mathcal{V}_+$ and $\mathcal{V}_-$ in a graph that are connected via relatively few edges (compared to the overall number of edges), the Fielder value is small;
@@ -138,7 +138,7 @@ Using the heat analogy, the Fielder value essentially measures the ``width'' of 
 The partitioning of vertices into $\mathcal{V}_+$ and $\mathcal{V}_-$ can be retrieved via the Fiedler vector $u_2$;
 vertices with a positive signal strength in $u_2$ are in $\mathcal{V}_+$, the other vertices are in $\mathcal{V}_-$.
 The so called \textit{spectral clustering} algorithm is based on this relationship.
-Figure~\ref{fig:sgt:graphFourier} shows how the Fiedler vector $u_2$ partitions a graph via the signs of the vertex signal strengths.
+\Cref{fig:sgt:graphFourier} shows how the Fiedler vector $u_2$ partitions a graph via the signs of the vertex signal strengths.
 
 As we have just seen, expressing a graph $G$ in terms of the spectrum of its Laplacian $L$ gives us access to graph characteristics like its overall connectivity.
 Similar to how the low-frequency components of the Fourier transform of a function represent the overall shape of that function, the eigenvectors associated to the small eigenvectors of $L$ represent overall characteristics of $G$.

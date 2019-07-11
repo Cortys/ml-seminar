@@ -15,20 +15,20 @@ Then we will describe a randomized algorithm to compute such a coarsening.
 The core idea of graph coarsening is to replace clusters of vertices in the original graph $G$ by single vertices in the coarsened graph $G_c$.
 Formally this means that the original vertices $\mathcal{V} = \{ v_1, \dots, v_N \}$ are mapped to a smaller vertex set $\mathcal{V}_c = \{ v'_1, \dots, v'_n \}$ via a surjective mapping $\varphi: \mathcal{V} \to \mathcal{V}_c$.
 The original edges $(v_i, v_j) \in \mathcal{E}$ are mapped to $(\varphi(v_i), \varphi(v_j))$, resulting in a reduced edge set $\mathcal{E}_c$ that contains every edge for which $\varphi(v_i) \neq \varphi(v_j)$.
-Figure~\ref{fig:coarse:example:coarsened} shows an exemplary graph coarsening.
+\Cref{fig:coarse:example:original,fig:coarse:example:coarsened} show an exemplary graph coarsening.
 To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \mathcal{P}(\mathcal{V})$ as the mapping from a coarsened vertex to the set of original vertices it represents.
 
 \begin{figure}
 	\centering
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.33\textwidth}
 		\includegraphics[width=0.9\linewidth]{gfx/coarse/example/original.pdf}
 		\caption{Original $G$}\label{fig:coarse:example:original}
-	\end{subfigure}
-	\begin{subfigure}{0.32\textwidth}
+	\end{subfigure}%
+	\begin{subfigure}{0.33\textwidth}
 		\includegraphics[width=0.9\linewidth]{gfx/coarse/example/coarsened.pdf}
 		\caption{Coarsened $G_c$}\label{fig:coarse:example:coarsened}
-	\end{subfigure}
-	\begin{subfigure}{0.32\textwidth}
+	\end{subfigure}%
+	\begin{subfigure}{0.33\textwidth}
 		\includegraphics[width=0.9\linewidth]{gfx/coarse/example/reexpanded.pdf}
 		\caption{Approximated $\widetilde{G}$}\label{fig:coarse:example:reexpanded}
 	\end{subfigure}
@@ -39,31 +39,76 @@ To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \m
 \end{figure}
 In the last section we saw how graphs can be described via their Laplacian $L$.
 Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will now describe a coarsening $\varphi$ as an operation that acts directly on $L$.
-The so called coarsening matrix $C \in \mathbb{R}^{n \times N}$ is essentially just a matrix representation of $\varphi$, i.e.\@ $\varphi(v_i) = v'_j \Leftrightarrow C b_i \propto b'_j$, with $b_i$ being the $i$-th standard basis vector of $\mathbb{R}^N$ and $b'_j$ the $j$-th standard basis vector of $\mathbb{R}^n$.
+The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially just a matrix representation of $\varphi$:
+\begin{align}
+	\varphi(v_i) = v'_j \Leftrightarrow C b_i = n_j b'_j\quad
+	& \text{with the standard basis vectors } b_i \in \mathbb{R}^N,\, b'_j \in \mathbb{R}^n\\
+	& \text{and normalization factor\footnotemark\ } n_j := {|\varphi^{-1}(v'_j)|}^{-\frac{1}{2}} \nonumber
+\end{align}
+\footnotetext{%
+	$n_j$ is required for technical reasons.
+	It normalizes $\Pi = C^{\top} C$ so that it is a projector, i.e.\@ so it has eigenvalues in $\{ 0, 1 \}$.
+	This ensures that $G$ and $\widetilde{G}$ have the same total weight.
+}%
+Analogous to $\varphi$, the coarsening matrix $C$ maps vertex basis vectors of $G$ to vertex basis vectors of $G_c$.
 By linearity any signal $x \in \mathbb{R}^N$ on $G$ can thus be downsampled to a signal $x_c := C x \in \mathbb{R}^n$ on the coarsened graph $G_c$;
 the signal strengths of merged vertices will simply be added up.
 Similarly a downsampled signal $x_c$ can be upsampled again to an approximation $\widetilde{x} \in \mathbb{R}^N$ of the original signal $x$.
 Upsampling uniformly distributes the signal strength of each $v'_j \in \mathcal{V}_c$ among $\varphi^{-1}(v'_i)$, where the inverse $\varphi^{-1}$ can be represented by $C^{\top}$:
 \begin{align}
-	\widetilde{x} := C^{\top} x_c = C^{\top} C x = \Pi x\quad\text{with } \Pi := C^{\top} C
+	\widetilde{x} := C^{\top} x_c = C^{\top} C x = \Pi x\quad\text{with the projector } \Pi := C^{\top} C
 \end{align}
 
-Since both the coarsening matrix $C$ and the Laplacian $L$ are operators acting on signals, we can combine them to define the so called \textit{coarsened Laplacian} $L_c$ and the \textit{approximate Laplacian} $\widetilde{L}$:
+Since both the coarsening matrix $C$ and the Laplacian $L$ are operators acting on signals, we can combine them to define the so called \textit{coarsened Laplacian} $L_c$ and also the \textit{approximate Laplacian} $\widetilde{L}$:
 \begin{align}
 	L_c := C L C^{\top}\quad\text{and}\quad\widetilde{L} := C^{\top} L_c C = \Pi L \Pi
 \end{align}
-$L_c$ represents the Laplacian of the coarsened graph $G_c$\footnote{
+$L_c$ represents the Laplacian of the coarsened graph $G_c$\footnote{%
 	$L_c$ is actually not a proper combinatorial Laplacian, i.e.\@ its rows do not generally add up to $0$.
 	To fix this, $L_c$ could be normalized, which is however not necessary for our analysis.
 	We refer to TODO for the details.
 }.
 $\widetilde{L}$ represents the Laplacian of the graph $\widetilde{G}$, which is the result of re-expanding the coarsened graph $G_c$.
-During re-expansion, every vertex $v'_i \in \mathcal{V}_c$ is replaced by the complete graph over the vertex set $\varphi^{-1}(v'_i)$.
+During re-expansion, every vertex $v'_i \in \mathcal{V}_c$ is replaced by the complete graph on the vertex set $\varphi^{-1}(v'_i)$.
 The neighbors of each replaced $v'_i$ are connected to the vertices that replace it.
-Figure~\ref{fig:coarse:example:reexpanded} shows how a graph might look like after such a re-expansion.
-
-Until now we have focused on how coarsening changes the nodes and edges of a graph.
-
+\Cref{fig:coarse:example:reexpanded} shows how a graph might look like after such a re-expansion.
 
 \subsection{The Randomized Edge Contraction Algorithm}%
 \label{sec:coarse:rec}
+
+Now that we have defined the coarsening operator, we will look at a simple randomized algorithm which finds a coarsened graph $G_c$ that is spectrally similar to some given graph $G$.
+The so called \textit{Randomized Edge Contraction} (REC) algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
+It contracts up to $T$ random edges from the candidate set $\mathcal{C}$ as long as there are neighboring pairs of unmerged vertices.
+\begin{figure}
+	\setlength{\intextsep}{0pt}
+	\begin{minipage}{0.6\linewidth}
+		\begin{algorithm}[H]
+			\caption{Randomized Edge Contraction}\label{algo:coarse:rec}
+			\begin{algorithmic}[1]
+				\Function{REC}{$G = (\mathcal{V}, \mathcal{E}, W), T \in \mathbb{N}$}
+					\State{$\mathcal{C} \leftarrow \mathcal{E}$, $G_c \leftarrow G$}
+					\State{$\Phi \leftarrow \sum_{e_{i j} \in \mathcal{E}} w_{i j}, t \leftarrow 0$}
+					\While{$|\mathcal{C}| > 0$ and $t < T$}
+						\State{$t \leftarrow t + 1$}
+						\State{Select some $e_{i j} \in \mathcal{C}$ with prob.\@ $p_{i j} = \frac{w_{i j}}{\Phi}$}
+						\Statex{\hspace{\algorithmicindent}\hspace{\algorithmicindent} %
+							or \textbf{continue} with prob.\@ $1 - \sum_{e_{i j} \in \mathcal{C}} p_{i j}$.}
+						\State{$\mathcal{C} \leftarrow \mathcal{C} \setminus \mathcal{N}_{i j}$}
+						\State{$G_c \leftarrow \mathit{contract}(G_c, e_{i j})$}
+					\EndWhile{}
+					\State{\Return{$G_c$}}
+				\EndFunction{}
+			\end{algorithmic}
+		\end{algorithm}
+	\end{minipage}%
+	\begin{minipage}{0.4\linewidth}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.75\linewidth]{gfx/coarse/rec.pdf}
+			\caption{$\mathit{contract}(G_c, e_{i j})$.}\label{fig:coarse:rec}
+		\end{figure}
+	\end{minipage}
+\end{figure}
+
+We define the neighborhood $\mathcal{N}_{i j}$ as the set of incident edges of $e_{i j}$ including $e_{i j}$ itself, as illustrated in \cref{fig:coarse:rec}.
+REC only merges vertices that have not been merged with some other vertex yet; thus \@ $|\mathcal{V}_c| = n \geq \frac{1}{2} N$.

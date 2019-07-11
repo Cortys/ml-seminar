@@ -51,6 +51,7 @@
 }
 \renewcommand{\baselinestretch}{1.15}
 \usepackage[parfill]{parskip}
+\usepackage{float}
 
 % Colors:
 \usepackage[usenames, dvipsnames, svgnames, table]{xcolor}
@@ -67,7 +68,8 @@
 \usepackage{upgreek}
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
-\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -112,6 +114,8 @@
     bookmarksnumbered=true,     %
     bookmarksopen=true          %
 }
+\usepackage[nameinlink]{cleveref}
+\newcommand{\crefrangeconjunction}{--}
 
 \usepackage[						% use biblatex for bibliography
 	backend=bibtex,					% 	- use biber backend (bibtex replacement) or bibtex
