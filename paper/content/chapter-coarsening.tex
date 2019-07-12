@@ -79,6 +79,7 @@ The neighbors of each replaced $v'_i$ are connected to the vertices that replace
 Now that we have defined the coarsening operator, we will look at a simple randomized algorithm which finds a coarsened graph $G_c$ that is spectrally similar to some given graph $G$.
 The so called \textit{Randomized Edge Contraction} (REC) algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
 It contracts up to $T$ random edges from the candidate set $\mathcal{C}$ as long as there are neighboring pairs of unmerged vertices.
+The contracted edges are chosen with a probability proportional to their weight.
 \begin{figure}
 	\setlength{\intextsep}{0pt}
 	\begin{minipage}{0.6\linewidth}
@@ -110,5 +111,7 @@ It contracts up to $T$ random edges from the candidate set $\mathcal{C}$ as long
 	\end{minipage}
 \end{figure}
 
-We define the neighborhood $\mathcal{N}_{i j}$ as the set of incident edges of $e_{i j}$ including $e_{i j}$ itself, as illustrated in \cref{fig:coarse:rec}.
-REC only merges vertices that have not been merged with some other vertex yet; thus \@ $|\mathcal{V}_c| = n \geq \frac{1}{2} N$.
+We define the neighborhood $\mathcal{N}_{i j}$ as the set of incident edges of $e_{i j}$ including $e_{i j}$ itself; shown as the red and blue edges in \cref{fig:coarse:rec}.
+REC only merges vertices that have not been merged with some other vertex yet.
+Thus the reduction ratio $r = \frac{N - n}{N}$ is at most $\frac{1}{2}$, i.e.\@ $|\mathcal{V}_c| \geq \frac{1}{2} |\mathcal{V}|$.
+If the node count needs to be further reduced, REC has to be applied multiple times.
