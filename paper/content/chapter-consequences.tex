@@ -1,6 +1,20 @@
 % !TEX root = ../main.tex
 % chktex-file 21
-\section{Spectral Graph Similarity}%
-\label{sec:ss}
+% chktex-file 46
+\section{Effects of Coarsening}%
+\label{sec:cons}
 
-TODO
+We have just seen how to compute a coarsened graph $G_c$ via the REC algorithm.
+What remains to be answered now is how coarsening affects the performance of graph algorithms when $G_c$ is used as a proxy for the original graph $G$.
+In the first step we will introduce a graph similarity measure.
+Using this measure we will then put bounds on the dissimilarity of $G$ and $G_c$.
+Finally we will use those bounds to analyze the influence of coarsening on the performance of the \textit{spectral clustering algorithm}.
+
+\subsection{Restricted Spectral Similarity}%
+\label{sec:cons:rss}
+
+\subsection{Putting an RSS-bound on REC}%
+\label{sec:cons:bound}
+
+\subsection{Implications for Spectral Clustering}%
+\label{sec:cons:sc}
