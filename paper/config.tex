@@ -42,12 +42,12 @@
 % **************************************************
 \usepackage{geometry}
 \geometry{
-  a4paper,         % or letterpaper
-  textwidth=13cm,  % llncs has 12.2cm
-  textheight=23cm, % llncs has 19.3cm
-  heightrounded,   % integer number of lines
+  a4paper,
+  % textwidth=13cm,
+  % textheight=23cm,
+  % heightrounded,   % integer number of lines
   hratio=1:1,      % horizontally centered
-  vratio=1:1,      % vertically centered
+  % vratio=1:1,      % vertically centered
 }
 \renewcommand{\baselinestretch}{1.15}
 \usepackage[parfill]{parskip}
@@ -78,6 +78,7 @@
 \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};} % chktex 1
 \usepackage[labelfont=bf]{caption}
 \usepackage{subcaption}
+\usepackage{wrapfig}
 
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}

@@ -5,7 +5,7 @@
 \label{sec:coarse}
 
 We will now see how the size of a graph $G$ can be reduced via \textit{graph coarsening}.
-The resulting coarsened graph $G_c$ should ideally be structurally similar to $G$, i.e.\@ it should have a similar spectrum.
+The resulting coarsened graph $G_c$ should ideally be structurally similar to $G$, i.e.\  it should have a similar spectrum.
 In this section we will first define the class of coarsening operators $C$ formally and give an intuition how they change the shape of a graph.
 Then we will describe a randomized algorithm to compute such a coarsening.
 
@@ -17,8 +17,7 @@ Formally this means that the original vertices $\mathcal{V} = \{ v_1, \dots, v_N
 The original edges $(v_i, v_j) \in \mathcal{E}$ are mapped to $(\varphi(v_i), \varphi(v_j))$, resulting in a reduced edge set $\mathcal{E}_c$ that contains every edge for which $\varphi(v_i) \neq \varphi(v_j)$.
 \Cref{fig:coarse:example:original,fig:coarse:example:coarsened} show an exemplary graph coarsening.
 To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \mathcal{P}(\mathcal{V})$ as the mapping from a coarsened vertex to the set of original vertices it represents.
-
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\begin{subfigure}{0.33\textwidth}
 		\includegraphics[width=0.9\linewidth]{gfx/coarse/example/original.pdf}
@@ -37,9 +36,10 @@ To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \m
 		The graph $\widetilde{G}$ on the right shows the result of re-expanding $G_c$.
 	}\label{fig:coarse:example}
 \end{figure}
+
 In the last section we saw how graphs can be described via their Laplacian $L$.
 Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will now describe a coarsening $\varphi$ as an operation that acts directly on $L$.
-The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially just a matrix representation of $\varphi$:
+The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially just a matrix representing $\varphi$:
 \begin{align}
 	\varphi(v_i) = v'_j \Leftrightarrow C b_i = n_j b'_j\quad
 	& \text{with the standard basis vectors } b_i \in \mathbb{R}^N,\, b'_j \in \mathbb{R}^n\\
@@ -47,7 +47,7 @@ The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is esse
 \end{align}
 \footnotetext{%
 	$n_j$ is required for technical reasons.
-	It normalizes $\Pi = C^{\top} C$ so that it is a projector, i.e.\@ so it has eigenvalues in $\{ 0, 1 \}$.
+	It normalizes $\Pi = C^{\top} C$ so that it is a projector, i.e.\  so it has eigenvalues in $\{ 0, 1 \}$.
 	This ensures that $G$ and $\widetilde{G}$ have the same total weight.
 }%
 Analogous to $\varphi$, the coarsening matrix $C$ maps vertex basis vectors of $G$ to vertex basis vectors of $G_c$.
@@ -64,7 +64,7 @@ Since both the coarsening matrix $C$ and the Laplacian $L$ are operators acting 
 	L_c := C L C^{\top}\quad\text{and}\quad\widetilde{L} := C^{\top} L_c C = \Pi L \Pi
 \end{align}
 $L_c$ represents the Laplacian of the coarsened graph $G_c$\footnote{%
-	$L_c$ is actually not a proper combinatorial Laplacian, i.e.\@ its rows do not generally add up to $0$.
+	$L_c$ is actually not a proper combinatorial Laplacian, i.e.\  its rows do not generally add up to $0$.
 	To fix this, $L_c$ could be normalized, which is however not necessary for our analysis.
 	We refer to \citet{Loukas2018} for the details.
 }.
@@ -80,7 +80,7 @@ Now that we have defined the coarsening operator, we will look at a simple rando
 The so called \textit{Randomized Edge Contraction} (REC) algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
 It contracts up to $T$ random edges from the candidate set $\mathcal{C}$ as long as there are neighboring pairs of unmerged vertices.
 The contracted edges are chosen with a probability proportional to their weight.
-\begin{figure}
+\begin{figure}[H]
 	\setlength{\intextsep}{0pt}
 	\begin{minipage}{0.6\linewidth}
 		\begin{algorithm}[H]
@@ -88,12 +88,12 @@ The contracted edges are chosen with a probability proportional to their weight.
 			\begin{algorithmic}[1]
 				\Function{REC}{$G = (\mathcal{V}, \mathcal{E}, W), T \in \mathbb{N}$}
 					\State{$\mathcal{C} \leftarrow \mathcal{E}$, $G_c \leftarrow G$}
-					\State{$\Phi \leftarrow \sum_{e_{i j} \in \mathcal{E}} w_{i j}, t \leftarrow 0$}
+					\State{$Z \leftarrow \sum_{e_{i j} \in \mathcal{E}} w_{i j}, t \leftarrow 0$}
 					\While{$|\mathcal{C}| > 0$ and $t < T$}
 						\State{$t \leftarrow t + 1$}
-						\State{Select some $e_{i j} \in \mathcal{C}$ with prob.\@ $p_{i j} = \frac{w_{i j}}{\Phi}$}
+						\State{Select some $e_{i j} \in \mathcal{C}$ with prob.\  $p_{i j} = \frac{w_{i j}}{Z}$}
 						\Statex{\hspace{\algorithmicindent}\hspace{\algorithmicindent} %
-							or \textbf{continue} with prob.\@ $1 - \sum_{e_{i j} \in \mathcal{C}} p_{i j}$.}
+							or \textbf{continue} with prob.\  $1 - \sum_{e_{i j} \in \mathcal{C}} p_{i j}$.}
 						\State{$\mathcal{C} \leftarrow \mathcal{C} \setminus \mathcal{N}_{i j}$}
 						\State{$G_c \leftarrow \mathit{contract}(G_c, e_{i j})$}
 					\EndWhile{}
@@ -111,7 +111,8 @@ The contracted edges are chosen with a probability proportional to their weight.
 	\end{minipage}
 \end{figure}
 
-We define the neighborhood $\mathcal{N}_{i j}$ as the set of incident edges of $e_{i j}$ including $e_{i j}$ itself; shown as the red and blue edges in \cref{fig:coarse:rec}.
+We define the neighborhood $\mathcal{N}_{i j}$ as the set of incident edges of $e_{i j}$, including $e_{i j}$ itself;
+this is shown as the red and blue edges in \cref{fig:coarse:rec}.
 REC only merges vertices that have not been merged with some other vertex yet.
-Thus the reduction ratio $r = \frac{N - n}{N}$ is at most $\frac{1}{2}$, i.e.\@ $|\mathcal{V}_c| \geq \frac{1}{2} |\mathcal{V}|$.
+Thus the reduction ratio $r = \frac{N - n}{N}$ is at most $\frac{1}{2}$, i.e.\  $|\mathcal{V}_c| \geq \frac{1}{2} |\mathcal{V}|$.
 If the node count needs to be further reduced, REC has to be applied multiple times.
