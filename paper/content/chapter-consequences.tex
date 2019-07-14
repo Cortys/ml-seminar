@@ -18,25 +18,30 @@ As we have seen before, $G$ can be viewed as an operator that transforms an inpu
 We described this transform in terms of the graph's Laplacian $L$,
 more specifically in terms of the Laplacian's eigenbasis ${\{ u_k \}}_{1 \leq k \leq N}$ and spectrum ${\{ \lambda_k \}}_{1 \leq k \leq N}$.
 Similarly the coarsened graph $G_c$ can be described in terms of its Laplacian $L_c$.
-Since $L \in \mathbb{R}^{N \times N}$ and $L_c \in \mathbb{R}^{n \times n}$ act on signal spaces of different dimensionality, they however cannot be compared directly.
-Instead we will compare $L$ with $\widetilde{L} = C^{\top} L_c C$, an upsampled version of $L_c$.
-We say $\widetilde{L}$ is an \textit{$\epsilon$-approximation} of $L$ iff.\  $\widetilde{L}$ scales all eigenvectors $u_k$ of $L$ by a factor of roughly $\lambda_k$ in the direction of $u_k$:
-\begin{wrapfigure}{l}{0.32\textwidth}
+Since $L \in \mathbb{R}^{N \times N}$ and $L_c \in \mathbb{R}^{n \times n}$ act on signal spaces of different dimensionality, they cannot be compared directly however.
+Instead we compare $L$ with $\widetilde{L} = C^{\top} L_c C$, the upsampled version of $L_c$.
+We say $\widetilde{L}$ is an \textit{$\epsilon$-approximation} of $L$ iff.\  $\widetilde{L}$ scales the eigenvectors $u_k$ of $L$ by a factor of roughly $\lambda_k$ in the direction of $u_k$:
+\begin{wrapfigure}{r}{0.25\textwidth}
 	\centering
 	\includegraphics[width=\linewidth]{gfx/cons/rss.pdf}
-	\caption{Illustr.\ of \cref{eq:cons:rss}.}\label{fig:cons:rss}
+	\caption{See \cref{eq:cons:rss}.}\label{fig:cons:rss}
 \end{wrapfigure}
 \begin{align}
-	(1 - \epsilon) \lambda_k \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \epsilon) \lambda_k\quad\text{with } \epsilon \geq 0\label{eq:cons:rss}
+	\forall k \leq K:\ (1 - \epsilon) \underbrace{u_k^{\top} L u_k}_{\lambda_k} \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \epsilon) \underbrace{u_k^{\top} L u_k}_{\lambda_k} \text{ with } \epsilon \geq 0\label{eq:cons:rss}
 \end{align}
-For $\epsilon = 0$ this definition implies $L = \widetilde{L}$.
-There is however one problem if we require \cref{eq:cons:rss} to hold for \textit{all} eigenvectors $u_k$ of $L$.
-The rank of $L$ is $N - 1$, since it has $N$ orthogonal eigenvectors of which $u_1 \in \ker(L)$ does not increase the rank\footnote{%
-	More generally $\text{rank}(L) = N - c$ if $G$ has $c$ connected components.
-};
-similarly $\text{rank}(\widetilde{L}) = n - 1$.
-Thus there must be some eigenvector $u_k$ of $L$ with $\lambda_k > 0$ that lies in the null space of $\widetilde{L}$.
-For this eigenvector \cref{eq:cons:rss} can never be satisfied, meaning no $\widetilde{L}$ can be an $\epsilon$-approximation of $L$.
+The reason we require \cref{eq:cons:rss} to hold only for the first $K$ eigenvectors of $L$ is, that $\text{rank}(L) = N - c$, whereas $\text{rank}(\widetilde{L}) = n - c$;
+i.e.\ $\widetilde{L}$ has a higher dimensional null space\footnote{%
+	Here $c$ denotes the number of connected components of $G$.
+	They reduce the rank since $\lambda_1 = \cdots = \lambda_c = 0$.
+}.
+Thus \cref{eq:cons:rss} cannot not hold for a signal $x$ that is in the null space of $\widetilde{L}$ but not in that of $L$.
+For this reason the similarity condition is restricted to the first $K$ eigenvectors, as they represent the most important ``low-frequency'' components of $G$.
+This restricted condition is called \textit{restricted spectral similarity} (RSS).
+
+The choice of $K$ in RSS depends on the level of detail that should be considered when comparing $L$ and $\widetilde{L}$.
+If $G$ has $c'$ clusters, i.e.\ connected subgraphs with relatively few edges going out of it, a choice of $K = c'$ is typically reasonable.
+That way RSS checks whether the clusters of $G$ are preserved in the coarsened graph $G_c$ and how much the connectedness between the clusters changes.
+Details like the connections within clusters on the other hand would not have a strong influence on the RSS similarity.
 
 \subsection{Putting an RSS-bound on REC}%
 \label{sec:cons:bound}
