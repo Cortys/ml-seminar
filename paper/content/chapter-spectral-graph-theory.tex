@@ -29,7 +29,7 @@ Intuitively graph signals can thus be understood as a discretized generalization
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\linewidth]{gfx/sgt/real-graph.pdf}
-	\caption{
+	\caption{%
 		Illustration of how the discretized real number line can be interpreted as an infinite linear graph, compared to some arbitrary finite non-linear graph.
 		The bars show the signal strengths $f(t)$ and $x_i$ at the vertices $b_t$ and $b_i$ respectively.
 	}\label{fig:sgt:realGraph}
@@ -72,7 +72,7 @@ The distinguishing property of ${\{ u_\xi \}}_{\xi \in \mathbb{R}}$, making it u
 The Laplacian is a multi\-dimensional generalization of the second derivative.
 For real-valued functions this boils down to $\Updelta u_\xi = \frac{\partial^2}{\partial t^2} u_\xi = -{(2 \pi \xi)}^2 e^{2 \pi i \xi t}$ with the eigenvalues $\lambda_\xi = {-(2\pi\xi)}^2$ depending solely on the frequency $\xi$.
 The original motivation to express functions in terms of the Laplacian's eigenbasis was to solve the physical heat equation\footnote{%
-	More generally the Fourier basis turns out to be meaningful for all \textit{linear time-invariant} (LTI) systems, of which heat equations are only one instance.
+	More generally the Fourier basis turns out to be meaningful for all \textit{linear time-invariant} (LTI) systems, of which the heat equations are only one instance.
 }.
 For this reason it is a useful intuition to think about signals as temperature distributions that will converge to an equilibrium state over time.
 This intuition also works in the graph setting where heat only flows between neighboring vertices in proportion to their connection strengths.
@@ -96,24 +96,23 @@ Putting both Laplacian variants, $L$ and $\frac{\partial^2}{\partial t^2}$, side
 	\begin{split}
 		{(L x)}_i = \sum_{j = 1}^{N} w_{i j} \underbrace{(x_i - x_j)}_{\Delta_{i, j}}
 	\end{split}
-	\ \left|\ %
-	\begin{split}
-		(-\frac{\partial^2}{\partial t^2} f)(t) &= \lim_{h \to 0} \frac{1}{h^2} (\underbrace{f(t) - f(t-h)}_{\Delta_{t, t-h}} + \underbrace{f(t) -  f(t+h)}_{\Delta_{t, t+h}}) \\
-	\end{split}\right.
+	\begin{split}\ \left|\ %
+		\left(-\frac{\partial^2}{\partial t^2} f\right)\mkern-4mu(t) = \lim_{h \to 0} \frac{1}{h^2} (\underbrace{f(t) - f(t-h)}_{\Delta_{t, t-h}} + \underbrace{f(t) -  f(t+h)}_{\Delta_{t, t+h}})
+	\right.\end{split}
 \end{equation}
 The second derivative of a function essentially just averages the differences in signal strength in the neighborhood of a point.
 For real-valued functions this neighborhood only consists of the two infinitesimally close points to the left and to the right of a point.
 The graph Laplacian represents the same operation, where each point/vertex might however have more than two neighbors.
 
-Now that we have defined the graph Laplacian $L$, the graph Fourier basis ${\{ u_k \}}_{1 \leq k \leq N}$ is just the set of eigenvectors of $L$.
+Based on the graph Laplacian $L$ we just defined, the graph Fourier basis ${\{ u_k \}}_{1 \leq k \leq N}$ is just the set of eigenvectors of $L$.
 In the rest of this paper we will assume that these eigenvectors $u_k$ are sorted in ascending order w.r.t.\  their eigenvalues $\lambda_k$, i.e.\  $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_N$.
 \Cref{fig:sgt:graphFourier} shows how this definition generalizes the Fourier basis from the real number line to an arbitrary graph.
 It also shows that the eigenvalues $\lambda_k$ of the graph Fourier basis encode some notion of frequency, just like they do in the classical Fourier basis.
-Those eigenvalues describe many characteristics of a graph and are called its \textit{spectrum}.
+Analogous to the classical Fourier transform, the eigenvalues of a graph are therefore also called its \textit{spectrum}.
 \begin{figure}[ht]
 	\centering
 	\makebox[\textwidth][c]{\includegraphics[width=\linewidth]{gfx/sgt/graph-fourier.pdf}}
-	\caption{
+	\caption{%
 		Comparison between the basis functions/vectors of the classical Fourier transform and the graph Fourier transform.
 		For the eigenfunctions on the upper half only the real cosine components of the complex exponentials are shown.
 	}\label{fig:sgt:graphFourier}
@@ -122,13 +121,13 @@ Those eigenvalues describe many characteristics of a graph and are called its \t
 \subsection{Spectral Properties of Graphs}%
 \label{sec:sgt:spectrum}
 
-We will now see how the spectrum of a graph describes its structural properties.
+We will now see how the spectrum of a graph relates to its structural properties.
 For any graph the smallest eigenvalue always is $\lambda_1 = 0$ with the associated eigenvector $u_1$ being a uniform signal over all vertices.
 Using the heat analogy, this simply means that any system in which everything has the same temperature is in an equilibrium state and no heat is flowing.
 More generally for graphs with $m$ separate connected components the first $m$ eigenvalues are all $0$ since each component can have its own equilibrium temperature without causing heat flow.
 If the spectrum of a graph is known, this fact can be used to quickly determine whether a graph is connected or not.
 
-Another meaningful eigenvalue is $\lambda_2$ and its eigenvector $u_2$, also called the \textit{Fiedler value} and \textit{vector} respectively.
+Another meaningful eigenvalue is $\lambda_2$ and its eigenvector $u_2$, also called the \textit{Fiedler value} and \textit{Fiedler vector} respectively.
 As we have just seen, a Fiedler value of $\lambda_2 = 0$ means that a graph is not connected.
 More generally the Fielder value can be interpreted as a measure of overall graph connectivity\footnote{%
 	Formally this measure is called \textit{algebraic connectivity}, as opposed to regular \textit{graph connectivity}, which is defined as $\min_{v_i \in \mathcal{V}} \deg(v_i)$.

@@ -31,7 +31,7 @@ To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \m
 		\includegraphics[width=0.9\linewidth]{gfx/coarse/example/reexpanded.pdf}
 		\caption{Approximated $\widetilde{G}$}\label{fig:coarse:example:reexpanded}
 	\end{subfigure}
-	\caption{
+	\caption{%
 		Example showing the effect of coarsening $G$ when merging the blue vertices into a single vertex.
 		The graph $\widetilde{G}$ on the right shows the result of re-expanding $G_c$.
 	}\label{fig:coarse:example}
@@ -43,7 +43,7 @@ The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is esse
 \begin{align}
 	\varphi(v_i) = v'_j \Leftrightarrow C b_i = n_j b'_j\quad
 	& \text{with the standard basis vectors } b_i \in \mathbb{R}^N,\, b'_j \in \mathbb{R}^n\\
-	& \text{and normalization factor\footnotemark\ } n_j := {|\varphi^{-1}(v'_j)|}^{-\frac{1}{2}} \nonumber
+	& \text{and normalization factor\footnotemark\ } n_j := {\left|\varphi^{-1}(v'_j)\right|}^{-\frac{1}{2}} \nonumber
 \end{align}
 \footnotetext{%
 	$n_j$ is required for technical reasons.
@@ -66,7 +66,7 @@ Since both the coarsening matrix $C$ and the Laplacian $L$ are operators acting 
 $L_c$ represents the Laplacian of the coarsened graph $G_c$\footnote{%
 	$L_c$ is actually not a proper combinatorial Laplacian, i.e.\  its rows do not generally add up to $0$.
 	To fix this, $L_c$ could be normalized, which is however not necessary for our analysis.
-	We refer to \citet{Loukas2018} for the details.
+	We refer to \citet[Sec.~2.1]{Loukas2018} for the details.
 }.
 $\widetilde{L}$ represents the Laplacian of the graph $\widetilde{G}$, which is the result of re-expanding the coarsened graph $G_c$.
 During re-expansion, every vertex $v'_i \in \mathcal{V}_c$ is replaced by the complete graph on the vertex set $\varphi^{-1}(v'_i)$.
