@@ -46,26 +46,42 @@ Details like the connections within clusters on the other hand do not have a str
 \subsection{Bounding REC via RSS}%
 \label{sec:cons:bound}
 
-Now we will use RSS to bound the eigenvalue error caused by REC coarsening.
+Now we will use RSS to bound the eigenvalue distortion caused by REC coarsening.
 It can be shown that the probability of satisfying the RSS condition for a single eigenvector $u_k$ with a sufficiently small eigenvalue $\lambda_k$ is lower-bounded by
 \begin{align}
-	P\mkern-2mu\left((1 - \varepsilon) \lambda_k \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \varepsilon) \lambda_k\right)
+	\forall \lambda_k \leq \frac{\nu_\text{min}}{4}:\ P\mkern-2mu\left((1 - \varepsilon) \lambda_k \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \varepsilon) \lambda_k\right)
 	\geq 1 - \frac{r \nu_{\text{max}}}{2 \varepsilon d_{\text{avg}}} \left(1 + \frac{3 - 4 \lambda_k}{\nu_{\text{min}}}\right)\label{eq:cons:bound}
 \end{align}
-where $r = \mathbb{E}\mkern-2mu\left[\frac{N - n}{N}\right]$ is the expected graph reduction ratio, $d_{\text{avg}} = \frac{1}{N} \sum_{v_i \in \mathcal{V}} d_i$ is the average vertex degree and $\nu_{\text{min}}$/$\nu_{\text{max}}$ are the minimum and maximum of the neighborhood weights ${\{ d_i + d_j - w_{i j}  \}}_{e_{i j} \in \mathcal{E}}$.
+where $r = \mathbb{E}\mkern-2mu\left[\frac{N - n}{N}\right]$ is the expected graph reduction ratio, $d_{\text{avg}} = \frac{1}{N} \sum_{v_i \in \mathcal{V}} d_i$ is the average weighted vertex degree and $\nu_{\text{min}}$, $\nu_{\text{max}}$ are the minimum and maximum of the neighborhood weights ${\{ d_i + d_j - w_{i j}  \}}_{e_{i j} \in \mathcal{E}}$.
 For a formal proof of this bound we refer to \citet[Suppl.~2]{Loukas2018}.
-Here we will instead focus on giving an intuition for its key implications:
+Here we will instead give an intuition for its key statements:
 \begin{enumerate}[label=\textbf{\arabic*.}]
-	\item \textbf{The $\varepsilon$-term:}
-		Unsurprisingly the RSS bound is inversely proportional to $\varepsilon$; relaxing the approximation bound makes it is more likely to be satisfied.
-	\item \textbf{The $r$-term:}
+	\item \textbf{$\varepsilon$-term:}
+		Unsurprisingly the RSS bound is inversely proportional to $\varepsilon$.
+		Relaxing the RSS bound makes it is more likely to be satisfied.
+	\item \textbf{$r$-term:}
 		The RSS bound is linearly dependent on the reduction ratio $r$.
 		The more the graph size is reduced, the smaller the probability of satisfying the bound.
-	\item \textbf{The $\lambda_k$-term:}
-		There is also a linear dependence on $\lambda_k$;
-		for large eigenvalues the probability of satisfying the bound goes \textit{down}.
-		This happens despite the fact that the associated eigenvectors $u_k$ represent ``high-frequency'' components of $G$ that are more easily disturbed than the smooth ``low-frequency'' eigenvectors.
-	\item \textbf{$\nu_{\text{min}}$, $\nu_{\text{max}}$ and $d_{\text{avg}}$:}
+	\item \textbf{$\lambda_k / \nu_{\text{min}}$-term:}
+		There is also a linear dependence on the eigenvalue $\lambda_k$, where $\nu_{\text{min}}$ acts as a normalizing constant to make the bound independent of the scale of $\lambda_k$.
+		For large eigenvalues the probability of satisfying the bound goes \textit{up}.
+		This might seem counterintuitive since high-valued eigenvectors represent ``high-frequency'' components of $G$ that are more easily disturbed by coarsening than the smooth ``low-frequency'' eigenvectors.
+		Thus one might expect the probability to go \textit{down} if $\lambda_k$ is large;
+		and indeed this is what would happen if the RSS bound was comparing eigenvectors $u_k$ with their approximation $\widetilde{u}_k := \Pi u_k$.
+
+		Since RSS compares $\lambda_k u_k$ with $\widetilde{L} u_k = L \widetilde{u}_k$ however, the Laplacian also has to be considered.
+		When applying $L$, large eigenvalues $\lambda_k$ generally have a stronger influence on the resulting signal than small eigenvalues ${\{ \lambda_\ell \}}_{\ell \ll k}$.
+		Eventhough $\langle u_\ell, \widetilde{u}_\ell \rangle > \langle u_k, \widetilde{u}_k \rangle$, $L$ weights the non-disturbed component $\langle \widetilde{u}_k, u_k \rangle u_k$ more strongly than the disturbed component $\sum_\ell \langle \widetilde{u}_k, u_\ell \rangle u_\ell$.
+		As long as the eigenvector distortion is not too large ($\lambda_k \leq \frac{\nu_\text{min}}{4}$), the latter effect offsets the former, i.e.\ $\lambda_\ell \langle u_\ell, \widetilde{u}_\ell \rangle < \lambda_k \langle u_k, \widetilde{u}_k \rangle$.
+
+		This is why large-valued eigenvectors have a larger probability of satisfying the RSS bound, up to the point where they become too large and the bound becomes undefined.
+		This can be seen in \cref{fig:cons:example:regular}; it shows the RSS bound for a $20$-regular graph, which is defined up to $\lambda_{20}$, after that the eigenvector distortion becomes too large.
+	\item \textbf{$\nu_{\text{max}}/d_{\text{avg}}$-term:}
+		Finally the bound also depends on the quotient between the maximum weight $\nu_{\text{max}}$ within an edge neighborhood $\mathcal{N}_{i j}$ and the average weighted vertex degree $d_{\text{avg}}$.
+		This quotient can be interpreted as a measure of how much the weight distribution within $G$ varies when comparing local clusters with the global average.
+		Regular graphs minimize this quotient, as all their local clusters have the same weight.
+		The key implication is that the distortion of the graph Laplacian caused by coarsening is proportional to the regularity of the coarsened graph, i.e.\ coarsening distorts regular graphs less than highly irregular graphs.
+		This can be seen in \crefrange{fig:cons:example:regular}{fig:cons:example:bunny} for three increasingly irregular example graphs.
 \end{enumerate}
 \begin{figure}[ht]
 	\centering
@@ -78,12 +94,13 @@ Here we will instead focus on giving an intuition for its key implications:
 		\caption{Yeast (protein network)}\label{fig:cons:example:yeast}
 	\end{subfigure}%
 	\begin{subfigure}{0.33\textwidth}
-		\includegraphics[width=\linewidth]{gfx/cons/example/roll.png}
-		\caption{Swiss roll (manifold)}\label{fig:cons:example:roll}
+		\includegraphics[width=\linewidth]{gfx/cons/example/bunny.png}
+		\caption{Bunny (point cloud)}\label{fig:cons:example:bunny}
 	\end{subfigure}
 	\caption{%
 		Comparison of the RSS-bound and the actual error constants $\varepsilon$ for the eigenvectors of multiple coarsened graphs ($r = 0.4$).
 		Confidence bounds for $p_s \in \{0.5, 0.7\}$ are shown.
+		\source{Loukas2018}
 	}\label{fig:cons:example}
 \end{figure}
 
