@@ -63,19 +63,25 @@ Here we will instead give an intuition for its key statements:
 		The RSS bound is linearly dependent on the reduction ratio $r$.
 		The more the graph size is reduced, the smaller the probability of satisfying the bound.
 	\item \textbf{$\lambda_k / \nu_{\text{min}}$-term:}
-		There is also a linear dependence on the eigenvalue $\lambda_k$, where $\nu_{\text{min}}$ acts as a normalizing constant to make the bound independent of the scale of $\lambda_k$.
-		For large eigenvalues the probability of satisfying the bound goes \textit{up}.
-		This might seem counterintuitive since high-valued eigenvectors represent ``high-frequency'' components of $G$ that are more easily disturbed by coarsening than the smooth ``low-frequency'' eigenvectors.
-		Thus one might expect the probability to go \textit{down} if $\lambda_k$ is large;
-		and indeed this is what would happen if the RSS bound was comparing eigenvectors $u_k$ with their approximation $\widetilde{u}_k := \Pi u_k$.
-
-		Since RSS compares $\lambda_k u_k$ with $\widetilde{L} u_k = L \widetilde{u}_k$ however, the Laplacian also has to be considered.
-		When applying $L$, large eigenvalues $\lambda_k$ generally have a stronger influence on the resulting signal than small eigenvalues ${\{ \lambda_\ell \}}_{\ell \ll k}$.
-		Eventhough $\langle u_\ell, \widetilde{u}_\ell \rangle > \langle u_k, \widetilde{u}_k \rangle$, $L$ weights the non-disturbed component $\langle \widetilde{u}_k, u_k \rangle u_k$ more strongly than the disturbed component $\sum_\ell \langle \widetilde{u}_k, u_\ell \rangle u_\ell$.
-		As long as the eigenvector distortion is not too large ($\lambda_k \leq \frac{\nu_\text{min}}{4}$), the latter effect offsets the former, i.e.\ $\lambda_\ell \langle u_\ell, \widetilde{u}_\ell \rangle < \lambda_k \langle u_k, \widetilde{u}_k \rangle$.
-
-		This is why large-valued eigenvectors have a larger probability of satisfying the RSS bound, up to the point where they become too large and the bound becomes undefined.
-		This can be seen in \cref{fig:cons:example:regular}; it shows the RSS bound for a $20$-regular graph, which is defined up to $\lambda_{20}$, after that the eigenvector distortion becomes too large.
+		The bound is also linearly dependent on the eigenvalue $\lambda_k$.
+		Additionally, since $\lambda_k$ is proportional to the weights $w_{i j}$, it is normalized via $\nu_{\text{min}}$.
+		To get an intuition for the influence of the eigenvalue on the RSS bound, two opposing effects have to be considered:
+		\begin{enumerate}[label=(\roman*)] % chktex 36
+			\item \textbf{Negative effect:}\label{itm:cons:bound:neg}
+				The eigenvector $u_k$ for a large $\lambda_k$ represents a ``high-frequency'' component of $G$ that is more easily distorted by coarsening than a smooth ``low-frequency'' eigenvector $u_\ell$ with eigenvalue $\lambda_{\ell \ll k}$ (see~\cref{fig:sgt:graphFourier}).
+				Formally this means that the approximated eigenvector $\widetilde{u}_k := \Pi u_k$ has a lower overlap with the original $u_k$ than $\widetilde{u}_\ell$ has with $u_\ell$, i.e.\ $\langle u_k, \widetilde{u}_k \rangle < \langle u_\ell, \widetilde{u}_\ell \rangle$.
+				This effect causes the RSS probability to \textit{decrease} with increasing, more easily distorted, eigenvalues.
+			\item \textbf{Positive effect:}\label{itm:cons:bound:pos}
+				Recall that $u_k^\top \widetilde{L} u_k = \widetilde{u}_k^\top L \widetilde{u}_k$ and $\lambda_k = u_k^\top L u_k$.
+				RSS checks whether $L$ transforms $u_k$ similarly to its approximate $\widetilde{u}_k$.
+				When writing the latter transform in terms of $L$'s eigenbasis we get $\widetilde{u}_k^\top L \widetilde{u}_k = \sum_{m = 1}^N \lambda_m \langle u_m, \widetilde{u}_k \rangle^2$.
+				For large eigenvalues $\lambda_k$ the self-overlap $\langle u_k, \widetilde{u}_k \rangle^2$ is weighted more strongly than the overlap with low-valued eigenvectors $u_{\ell \ll k}$.
+				This causes the RSS probability to \textit{increase} with increasing, more strongly weighted, eigenvalues.
+		\end{enumerate}
+		As long as the eigenvector distortion described in~\ref{itm:cons:bound:neg} is not too large ($\lambda_k \leq \frac{\nu_\text{min}}{4}$), the positive effect described in~\ref{itm:cons:bound:pos} dominates, i.e.\ $\lambda_k \langle u_k, \widetilde{u}_k \rangle^2 > \lambda_\ell \langle u_\ell, \widetilde{u}_\ell \rangle^2$ for $\lambda_{\ell \ll k}$.
+		This is why the RSS probability bound increases with increasing $\lambda_k$'s, up to the point where they become too large and the bound becomes undefined.
+		This can be seen in \cref{fig:cons:example:regular}.
+		It shows the RSS bound for a $20$-regular graph, which is defined up to $\lambda_{20}$, after that the eigenvector distortion becomes too large.
 	\item \textbf{$\nu_{\text{max}}/d_{\text{avg}}$-term:}
 		Finally the bound also depends on the quotient between the maximum weight $\nu_{\text{max}}$ within an edge neighborhood $\mathcal{N}_{i j}$ and the average weighted vertex degree $d_{\text{avg}}$.
 		This quotient can be interpreted as a measure of how much the weight distribution within $G$ varies when comparing local clusters with the global average.
