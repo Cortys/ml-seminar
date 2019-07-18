@@ -77,8 +77,8 @@ The neighbors of each replaced $v'_i$ are connected to the vertices that replace
 \label{sec:coarse:rec}
 
 Now that we have defined the coarsening operator, we will look at a simple randomized algorithm which finds a coarsened graph $G_c$ that is spectrally similar to some given graph $G$.
-The so called \textit{Randomized Edge Contraction} (REC) algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
-It contracts up to $T$ random edges from the candidate set $\mathcal{C}$ as long as there are neighboring pairs of unmerged vertices.
+The so called \textit{Randomized Edge Contraction}~(REC)~\cite{Loukas2018} algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
+It contracts random edges until the vertex count has been reduced by a ratio $r$ or until there are no more neighboring pairs of unmerged vertices.
 The contracted edges are chosen with a probability proportional to their weight.
 \begin{figure}[H]
 	\setlength{\intextsep}{0pt}
@@ -86,15 +86,13 @@ The contracted edges are chosen with a probability proportional to their weight.
 		\begin{algorithm}[H]
 			\caption{Randomized Edge Contraction}\label{algo:coarse:rec}
 			\begin{algorithmic}[1]
-				\Function{REC}{$G = (\mathcal{V}, \mathcal{E}, W), T \in \mathbb{N}$}
+				\Function{REC}{$G = (\mathcal{V}, \mathcal{E}, W), r \in [0, \frac{1}{2}]$}
 					\State{$\mathcal{C} \leftarrow \mathcal{E}$, $G_c \leftarrow G$}
-					\State{$Z \leftarrow \sum_{e_{i j} \in \mathcal{E}} w_{i j}, t \leftarrow 0$}
-					\While{$|\mathcal{C}| > 0$ and $t < T$}
-						\State{$t \leftarrow t + 1$}
-						\State{Select some $e_{i j} \in \mathcal{C}$ with prob.\  $p_{i j} = \frac{w_{i j}}{Z}$}
-						\Statex{\hspace{\algorithmicindent}\hspace{\algorithmicindent} %
-							or \textbf{continue} with prob.\  $1 - \sum_{e_{i j} \in \mathcal{C}} p_{i j}$.}
+					\State{$Z \leftarrow \sum_{e_{i j} \in \mathcal{E}} w_{i j}$}
+					\While{$|\mathcal{C}| > 0$ and $\frac{|\mathcal{V}_c|}{|\mathcal{V}|} > 1 - r$}
+						\State{Select some $e_{i j} \in \mathcal{C}$ with prob.\  $p_{i j} = \frac{w_{i j}}{Z}$.}
 						\State{$\mathcal{C} \leftarrow \mathcal{C} \setminus \mathcal{N}_{i j}$}
+						\State{$Z \leftarrow \sum_{e_{i j} \in \mathcal{C}} w_{i j}$}
 						\State{$G_c \leftarrow \mathit{contract}(G_c, e_{i j})$}
 					\EndWhile{}
 					\State{\Return{$G_c$}}

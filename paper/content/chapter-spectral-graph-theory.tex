@@ -39,7 +39,7 @@ Intuitively graph signals can thus be understood as a discretized generalization
 	Technically this is not correct, since $\mathbb{R}$ is continuous whereas all vertex sets $\mathcal{V}$ have to be discrete.
 	To build an intuition for graph signals, this detail can however be ignored.
 }.
-Both, real functions and graph signals, can be described as vectors in their vertex base:
+Both, real functions and graph signals, can be described as vectors in their time and vertex base respectively:
 \begin{equation}
 	\begin{split}
 		f = \int_{\mathbb{R}} f(t) b_t dt
@@ -91,18 +91,18 @@ This Fourier basis again is characterized by it being an eigenbasis of the Lapla
 	}, d_i := \sum_{j = 1}^{N} w_{i j}
 \end{align}
 Using this definition, the application $L x$ is a discrete generalized analogue of the second derivative $\frac{\partial^2}{\partial t^2} f$.
-Putting both Laplacian variants, $L$ and $\frac{\partial^2}{\partial t^2}$, side-by-side gives an intuition for why this is the case:
+Putting both Laplacian variants, $\frac{\partial^2}{\partial t^2}$ and $L$, side-by-side gives an intuition for why this is the case:
 \begin{equation}
 	\begin{split}
-		{(L x)}_i = \sum_{j = 1}^{N} w_{i j} \underbrace{(x_i - x_j)}_{\Delta_{i, j}}
+		\left(-\frac{\partial^2}{\partial t^2} f\right)\mkern-4mu(t) = \lim_{h \to 0} \frac{1}{h^2} (\underbrace{f(t) - f(t-h)}_{\Delta_{t, t-h}} + \underbrace{f(t) -  f(t+h)}_{\Delta_{t, t+h}})
 	\end{split}
 	\begin{split}\ \left|\ %
-		\left(-\frac{\partial^2}{\partial t^2} f\right)\mkern-4mu(t) = \lim_{h \to 0} \frac{1}{h^2} (\underbrace{f(t) - f(t-h)}_{\Delta_{t, t-h}} + \underbrace{f(t) -  f(t+h)}_{\Delta_{t, t+h}})
+		{(L x)}_i = \sum_{j = 1}^{N} w_{i j} \underbrace{(x_i - x_j)}_{\Delta_{i, j}}
 	\right.\end{split}
 \end{equation}
 The second derivative of a function essentially just averages the differences in signal strength in the neighborhood of a point.
 For real-valued functions this neighborhood only consists of the two infinitesimally close points to the left and to the right of a point.
-The graph Laplacian represents the same operation, where each point/vertex might however have more than two neighbors.
+The graph Laplacian represents the same operation, where each point/vertex might however have more than two neighbors that need to be averaged.
 
 Based on the graph Laplacian $L$ we just defined, the graph Fourier basis ${\{ u_k \}}_{1 \leq k \leq N}$ is just the set of eigenvectors of $L$.
 In the rest of this paper we will assume that these eigenvectors $u_k$ are sorted in ascending order w.r.t.\  their eigenvalues $\lambda_k$, i.e.\  $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_N$.
@@ -122,7 +122,9 @@ Analogous to the classical Fourier transform, the eigenvalues of a graph are the
 \subsection{Spectral Properties of Graphs}%
 \label{sec:sgt:spectrum}
 
-We will now see how the spectrum of a graph relates to its structural properties.
+We will now give an intuition for the relation between the spectrum of a graph and its structural properties\footnote{%
+	For a more detailed discussion of this relation we refer to \citet{Shuman2013}.
+}.
 For any graph the smallest eigenvalue always is $\lambda_1 = 0$ with the associated eigenvector $u_1$ being a uniform signal over all vertices.
 Using the heat analogy, this simply means that any system in which everything has the same temperature is in an equilibrium state and no heat is flowing.
 More generally for graphs with $m$ separate connected components the first $m$ eigenvalues are all $0$ since each component can have its own equilibrium temperature without causing heat flow.

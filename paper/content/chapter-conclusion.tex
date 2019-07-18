@@ -1,6 +1,21 @@
 % !TEX root = ../main.tex
 % chktex-file 21
+% chktex-file 46
 \section{Conclusion}%
 \label{sec:conclusion}
 
-TODO
+We have now discussed the three main topics of this paper:
+\begin{enumerate*}
+	\item How the structural properties of graphs can be described via spectral graph theory.
+	\item How graphs can be coarsened via the REC algorithm.
+	\item How to bound the effects of coarsening via RSS and what this implies for spectral clustering.
+\end{enumerate*}
+
+
+Based on the work we presented, there are two main open questions for future research:
+\begin{enumerate*}
+	\item The described RSS bound assumes a single application of the REC algorithm.
+		For multiple REC applications with a total reduction ratio of $r > \frac{1}{2}$, the RSS bound has to be adapted.
+	\item Currently the RSS bound has only been applied to the analysis of spectral clustering.
+		To make the results more generally applicable the implications for other graph algorithms, graph convolutional neural networks in particular, are considered by \citet{Loukas2018}.
+\end{enumerate*}

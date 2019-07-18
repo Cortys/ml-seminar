@@ -6,9 +6,10 @@
 
 We have just seen how to compute a coarsened graph $G_c$ via the REC algorithm.
 What remains to be answered now is how coarsening affects the performance of graph algorithms when $G_c$ is used as a proxy for the original graph $G$.
-In the first step we will introduce a graph similarity measure.
+In the first step we will present a graph similarity measure.
 Using this measure we will then put bounds on the dissimilarity of $G$ and $G_c$.
 Finally we will use those bounds to analyze the influence of coarsening on the performance of the \textit{spectral clustering algorithm}.
+The results described in this section were first found by \citet{Loukas2018}.
 
 \subsection{Restricted Spectral Similarity}%
 \label{sec:cons:rss}
@@ -46,13 +47,13 @@ Details like the connections within clusters on the other hand do not have a str
 \subsection{Bounding REC via RSS}%
 \label{sec:cons:bound}
 
-Now we will use RSS to bound the eigenvalue distortion caused by REC coarsening.
+Now we will use RSS to bound the eigenvalue distortion caused by a single application of the REC coarsening algorithm.
 It can be shown that the probability of satisfying the RSS condition for a single eigenvector $u_k$ with a sufficiently small eigenvalue $\lambda_k$ is lower-bounded by
 \begin{align}
 	\forall \lambda_k \leq \frac{\nu_\text{min}}{4}:\ P\mkern-2mu\left((1 - \varepsilon) \lambda_k \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \varepsilon) \lambda_k\right)
 	\geq 1 - \frac{r \nu_{\text{max}}}{2 \varepsilon d_{\text{avg}}} \left(1 + \frac{3 - 4 \lambda_k}{\nu_{\text{min}}}\right)\label{eq:cons:bound}
 \end{align}
-where $r = \mathbb{E}\mkern-2mu\left[\frac{N - n}{N}\right]$ is the expected graph reduction ratio, $d_{\text{avg}} = \frac{1}{N} \sum_{v_i \in \mathcal{V}} d_i$ is the average weighted vertex degree and $\nu_{\text{min}}$, $\nu_{\text{max}}$ are the minimum and maximum of the neighborhood weights ${\{ d_i + d_j - w_{i j}  \}}_{e_{i j} \in \mathcal{E}}$.
+where $r = \frac{N - n}{N}$ is the graph reduction ratio, $d_{\text{avg}} = \frac{1}{N} \sum_{v_i \in \mathcal{V}} d_i$ is the average weighted vertex degree and $\nu_{\text{min}}$, $\nu_{\text{max}}$ are the minimum and maximum of the neighborhood weights ${\{ d_i + d_j - w_{i j}  \}}_{e_{i j} \in \mathcal{E}}$.
 For a formal proof of this bound we refer to \citet[Suppl.~2]{Loukas2018}.
 Here we will instead give an intuition for its key statements:
 \begin{enumerate}[label=\textbf{\arabic*.}]
@@ -64,21 +65,21 @@ Here we will instead give an intuition for its key statements:
 		The more the graph size is reduced, the smaller the probability of satisfying the bound.
 	\item \textbf{$\lambda_k / \nu_{\text{min}}$-term:}
 		The bound is also linearly dependent on the eigenvalue $\lambda_k$.
-		Additionally, since $\lambda_k$ is proportional to the weights $w_{i j}$, it is normalized via $\nu_{\text{min}}$.
+		Additionally, since $\lambda_k$ is proportional to the arbitrarily large weights $w_{i j}$, it is normalized via $\nu_{\text{min}}$.
 		To get an intuition for the influence of the eigenvalue on the RSS bound, two opposing effects have to be considered:
 		\begin{enumerate}[label=(\roman*)] % chktex 36
 			\item \textbf{Negative effect:}\label{itm:cons:bound:neg}
 				The eigenvector $u_k$ for a large $\lambda_k$ represents a ``high-frequency'' component of $G$ that is more easily distorted by coarsening than a smooth ``low-frequency'' eigenvector $u_\ell$ with eigenvalue $\lambda_{\ell \ll k}$ (see~\cref{fig:sgt:graphFourier}).
 				Formally this means that the approximated eigenvector $\widetilde{u}_k := \Pi u_k$ has a lower overlap with the original $u_k$ than $\widetilde{u}_\ell$ has with $u_\ell$, i.e.\ $\langle u_k, \widetilde{u}_k \rangle < \langle u_\ell, \widetilde{u}_\ell \rangle$.
-				This effect causes the RSS probability to \textit{decrease} with increasing, more easily distorted, eigenvalues.
+				$\pmb{\Rightarrow}$ This effect causes the RSS probability bound to \textit{decrease} with increasing, more easily distorted, eigenvalues.
 			\item \textbf{Positive effect:}\label{itm:cons:bound:pos}
 				Recall that $u_k^\top \widetilde{L} u_k = \widetilde{u}_k^\top L \widetilde{u}_k$ and $\lambda_k = u_k^\top L u_k$.
 				RSS checks whether $L$ transforms $u_k$ similarly to its approximate $\widetilde{u}_k$.
 				When writing the latter transform in terms of $L$'s eigenbasis we get $\widetilde{u}_k^\top L \widetilde{u}_k = \sum_{m = 1}^N \lambda_m \langle u_m, \widetilde{u}_k \rangle^2$.
 				For large eigenvalues $\lambda_k$ the self-overlap $\langle u_k, \widetilde{u}_k \rangle^2$ is weighted more strongly than the overlap with low-valued eigenvectors $u_{\ell \ll k}$.
-				This causes the RSS probability to \textit{increase} with increasing, more strongly weighted, eigenvalues.
+				$\pmb{\Rightarrow}$ This effect causes the RSS probability bound to \textit{increase} with increasing, more strongly weighted, eigenvalues.
 		\end{enumerate}
-		As long as the eigenvector distortion described in~\ref{itm:cons:bound:neg} is not too large ($\lambda_k \leq \frac{\nu_\text{min}}{4}$), the positive effect described in~\ref{itm:cons:bound:pos} dominates, i.e.\ $\lambda_k \langle u_k, \widetilde{u}_k \rangle^2 > \lambda_\ell \langle u_\ell, \widetilde{u}_\ell \rangle^2$ for $\lambda_{\ell \ll k}$.
+		As long as the eigenvector distortion described in~\ref{itm:cons:bound:neg} is not too large ($\lambda_k \leq \frac{\nu_\text{min}}{4}$), the positive effect described in~\ref{itm:cons:bound:pos} dominates, i.e.\ $\lambda_k \langle u_k, \widetilde{u}_k \rangle^2 > \lambda_\ell \langle u_\ell, \widetilde{u}_\ell \rangle^2$ for $k \gg \ell$ despite $\langle u_k, \widetilde{u}_k \rangle < \langle u_\ell, \widetilde{u}_\ell \rangle$.
 		This is why the RSS probability bound increases with increasing $\lambda_k$'s, up to the point where they become too large and the bound becomes undefined.
 		This can be seen in \cref{fig:cons:example:regular}.
 		It shows the RSS bound for a $20$-regular graph, which is defined up to $\lambda_{20}$, after that the eigenvector distortion becomes too large.
@@ -112,3 +113,53 @@ Here we will instead give an intuition for its key statements:
 
 \subsection{Implications for Spectral Clustering}%
 \label{sec:cons:sc}
+
+Lastly we will now evaluate the effect coarsening has on the performance of the \textit{spectral clustering algorithm}~\cite{Luxburg2007}.
+As we have seen in \cref{sec:sgt:spectrum}, the positive and negative vertex signal strengths of the Fiedler vector $u_2$ describe a $2$-clustering of the graph $G$ where the cluster boundary can be interpreted as a heat-flow bottleneck.
+This idea can be extended to the $K$-clustering scenario by considering the first $K$ eigenvectors $U_K = \{ u_2, \dots, u_K \}$ instead of only looking at $u_2$.
+To obtain a vertex clustering, the vertex basis vectors ${\{ b_i \}}_{1 \leq i \leq N}$ are projected onto the spectral basis $U_K$, i.e.\ the Fourier transform $\widehat{b}_i = {(\langle u_2, b_i \rangle, \dots, \langle u_K, b_i \rangle)}^\top$ is computed for each vertex.
+Afterwards regular $K$-means clustering is performed on the Fourier-transformed vertex basis ${\{\,\widehat{b}_i \}}_{1 \leq i \leq N}$ to get the clustering $S = (S_1, \dots, S_K)$ with $S_k \subseteq \mathcal{V}$.
+
+For large graphs $G$, computing the eigenbasis $U_K$ of $L \in \mathbb{R}^{N \times N}$ is expensive.
+To speed this up, one can compute the eigenbasis $\widetilde{U}_K = \{ C^\top u'_2, \dots, C^\top u'_K \}$ instead, where $u'_k$ are the eigenvectors of the coarsened Laplacian $L_c \in \mathbb{R}^{n \times n}$.
+Since we want a clustering on the original vertex set $\mathcal{V}$, not the coarsened vertices $\mathcal{V}_c$, the coarse eigenvectors $u'_k \in \mathbb{R}^n$ need to be upsampled to $C^\top u'_k \in \mathbb{R}^N$, which is a cheap operation compared to finding the eigenvectors.
+
+The question now is how much worse the spectral clustering results become when the vertex basis vectors ${\{ b_i \}}_{1 \leq i \leq N}$ are projected onto $\widetilde{U}_K$ instead of $U_K$.
+It was shown by \citet[Coroll.~5.1]{Loukas2018} that the RSS bound also implies a bound on the absolute spectral clustering error;
+therefore the intuitions we discussed in \cref{sec:cons:bound} also hold for spectral clustering.
+Most notably this implies that the absolute clustering error introduced by coarsening depends on the regularity of the graph, i.e.\ regular graphs are best suited to speed up spectral clustering via coarsening.
+\Cref{fig:cons:mnist} shows the relative performance decrease caused by coarsening for an exemplary regular graph.
+\begin{figure}[ht]
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}[
+			width=0.5\linewidth,
+			height=0.3\linewidth,
+			xmin=8, xmax=42,
+			ymin=0, ymax=0.04,
+			xtick={10,20,30,40},
+			xticklabels={10\%,20\%,30\%,40\%},
+			xtick pos=bottom,
+			ytick={0,0.01,0.02,0.03,0.04},
+			yticklabels={0\%,1\%,2\%,3\%,4\%},
+			ytick pos=left,
+			xlabel={reduction ratio $r$},
+			ylabel={relative error},
+			ymajorgrids=true,
+			label style={font=\tiny},
+			tick label style={font=\tiny},
+			tick align=outside,
+			y tick label style={/pgf/number format/.cd, fixed, scaled ticks=false, precision=2, /tikz/.cd}
+		]
+			\addplot [mark=*, color=blau] table [x=r, y=ref10, col sep=comma] {data/cons/mnist.csv};
+		\end{axis}
+	\end{tikzpicture}%
+	\quad\includegraphics[width=0.29\linewidth]{gfx/cons/mnistGraph.png}
+	\caption{%
+		(Left)~Relative spectral clustering error on a coarsened $12$-nearest neighbor similarity graph for $N=1000$ images from the MNIST dataset.
+		Only images of the digits 0 to 4 were sampled, thus $K = 5$.
+		(Right)~The full MNIST similarity graph $G$ with vertex colors indicating the clustering obtained via $\widetilde{U}_K$. Edges that are contracted in $G_c$ are shown in red.
+		\source{Loukas2018}
+	}\label{fig:cons:mnist}
+\end{figure}
+\vspace{-0.7cm}

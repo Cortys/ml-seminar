@@ -14,7 +14,7 @@ In order to run such algorithms on large graphs however, optimizations are requi
 For this purpose we will specifically look at \textit{graph coarsening}.
 Coarsening reduces the size of a given graph while preserving its overall structure via some notion of graph similarity that will be defined later.
 Graph algorithms can then be run on the smaller coarsened graph.
-Afterwards the result for the coarsened graph can be iteratively refined to obtain an approximate result for the original graph.
+Afterwards the algorithm's result for the coarsened graph can be iteratively refined to obtain an approximate result for the original graph.
 \Cref{fig:intro:overview} illustrates this approach.
 \begin{figure}[ht]
 	\centering
@@ -34,5 +34,5 @@ This introduction consists of three sections, each of which aims to answer one m
 	\item \textit{How does graph coarsening work?}
 		Based on the notion of the graph spectrum, we will formally define the graph coarsening operation and describe a randomized coarsening algorithm.
 	\item \textit{How does coarsening affect the result of graph algorithms?}
-		Finally we will put bounds on how much the described coarsening algorithm is expected to increase the error of the spectral clustering algorithm.
+		Finally we will put bounds on how much the described coarsening algorithm is expected to change a graph's spectrum and what this implies for the spectral clustering algorithm.
 \end{enumerate}
