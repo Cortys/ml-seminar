@@ -1,0 +1,14 @@
+<svg width="380" height="180" viewBox="0 0 380 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M100 170L10 90M280 170L370 90L190 10" stroke="#444444" stroke-width="3"/>
+<path d="M280 170H100L190 10" stroke="#3F6DB1" stroke-width="4"/>
+<circle cx="370" cy="90" r="9.5" fill="#929292" stroke="white"/>
+<circle cx="10" cy="90" r="9.5" fill="#929292" stroke="white"/>
+<circle cx="100" cy="170" r="9.5" fill="#3F6DB1" stroke="white"/>
+<circle cx="190" cy="10" r="9.5" fill="#3F6DB1" stroke="white"/>
+<circle cx="280" cy="170" r="9.5" fill="#3F6DB1" stroke="white"/>
+<path d="M65.4072 126H63.7725V115.163L60.4941 116.367V114.891L65.1523 113.142H65.4072V126Z" fill="black"/>
+<path d="M192.407 160H190.772V149.163L187.494 150.367V148.891L192.152 147.142H192.407V160Z" fill="black"/>
+<path d="M286.407 43H284.772V32.1631L281.494 33.3672V31.8906L286.152 30.1416H286.407V43Z" fill="black"/>
+<path d="M341.407 143H339.772V132.163L336.494 133.367V131.891L341.152 130.142H341.407V143Z" fill="black"/>
+<path d="M141.407 80H139.772V69.1631L136.494 70.3672V68.8906L141.152 67.1416H141.407V80Z" fill="black"/>
+</svg>
