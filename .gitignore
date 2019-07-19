@@ -239,3 +239,6 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+## Temporary PowerPoint file
+presentation/~\$presentation\.pptx
