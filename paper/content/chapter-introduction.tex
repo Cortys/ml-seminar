@@ -12,7 +12,7 @@ Algorithms like PageRank or spectral clustering are commonly used to analyze the
 In order to run such algorithms on large graphs however, optimizations are required.
 
 For this purpose we will specifically look at \textit{graph coarsening}.
-Coarsening reduces the size of a given graph while preserving its overall structure via some notion of graph similarity that will be defined later.
+Coarsening reduces the size of a given graph while preserving its overall structure via some notion of graph similarity that will be explained later.
 Graph algorithms can then be run on the smaller coarsened graph.
 Afterwards the algorithm's result for the coarsened graph can be iteratively refined to obtain an approximate result for the original graph.
 \Cref{fig:intro:overview} illustrates this approach.
@@ -25,7 +25,7 @@ Afterwards the algorithm's result for the coarsened graph can be iteratively ref
 \end{figure}
 
 The goal of this paper is to show how graph coarsening works and how it affects the results of graph algorithms.
-This introduction consists of three sections, each of which aims to answer one main question:
+We will discuss this topic in the upcoming three sections, each of which aims to answer one main question:
 \begin{enumerate}
 	\item \textit{How can the structural properties of a graph be formally described?}
 		To describe graph coarsening and its effects, the similarity between a graph $G$ and its coarsened version $G_c$ has to be quantified.
