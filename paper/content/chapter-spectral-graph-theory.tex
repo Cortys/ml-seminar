@@ -100,8 +100,8 @@ Putting both Laplacian variants, $\frac{\partial^2}{\partial t^2}$ and $L$, side
 		{(L x)}_i = \sum_{j = 1}^{N} w_{i j} \underbrace{(x_i - x_j)}_{\Delta_{i, j}}
 	\right.\end{split}
 \end{equation}
-The second derivative of a function $f$ essentially just averages the differences in signal strength in the neighborhood of a point $f(t)$.
-For real-valued functions this neighborhood only consists of the two infinitesimally close points to the left and to the right of a point, i.e.\ $f(t - h)$ and $f(t + h)$.
+The second derivative of a function $f$ essentially just averages the differences in signal strength in the neighborhood of a point $t$.
+For real-valued functions this neighborhood only consists of the two infinitesimally close points to the left and to the right of $t$, i.e.\ $t - h$ and $t + h$.
 The graph Laplacian represents the same operation, where each point/vertex might however have more than two neighbors that need to be averaged.
 
 Based on the graph Laplacian $L$ we just defined, the graph Fourier basis ${\{ u_k \}}_{k = 1}^{N}$ is just the set of eigenvectors of $L$.
