@@ -7,9 +7,9 @@
 We start with an introduction to spectral graph theory, which will allow us to characterize and compare the structure of graphs.
 Graphs are most commonly described in their vertex base, i.e.\  the connection strength $w_{i j}$ of pairs $(v_i, v_j)$ of vertices.
 \begin{align}
-	G :=&\, (\mathcal{V}, \mathcal{E}, W)\quad\text{with } W \in \mathbb{R}^{N \times N}, N := |\mathcal{V}|
+	G :=&\, (\mathcal{V}, \mathcal{E}, W)\quad\text{with edges } \mathcal{E} \subseteq \mathcal{V} \times \mathcal{V}\text{, weights } W \in \mathbb{R}^{N \times N}\text{ and vertex count } N := |\mathcal{V}|
 \end{align}
-In this paper we will only consider undirected graphs with non-negative real weights and without self-loops ($\forall v_i: w_{i i} = 0$).
+In this paper we will only consider undirected graphs with non-negative real weights and without self-loops ($\forall i: w_{i i} = 0$).
 
 The core idea of spectral graph theory is to perform a change of basis of $W$ and describe graphs in terms of their so called \textit{spectral base} instead of their \textit{vertex base}.
 To see what this means, we interpret the adjacency/weight matrix $W$ as a linear operator that operates on so called signals $x \in \mathbb{R}^N$.
@@ -21,7 +21,7 @@ This interpretation of graphs is very similar to that of Markov chains where sig
 \label{sec:sgt:real}
 
 Let us now compare discrete graph signals $x: \mathcal{V} \to \mathbb{R}$ to continuous real-valued functions $f: \mathbb{R} \to \mathbb{R}$.
-Both only differ in their domain.
+Both signatures only differ in their domain.
 The domain $\mathbb{R}$ of $f$ has an inherent structure, the real number line, which provides a strict ordering of its elements and a notion of distance between them.
 The domain $\mathcal{V}$ of $x$ however has no such inherent structure, i.e.\  $v_1 < v_2$ for two vertices $v_1, v_2$ does not have a clear meaning.
 The structure of $\mathcal{V}$ fully depends on the graph $G$ that is acting on it.
@@ -40,7 +40,7 @@ Intuitively graph signals can thus be understood as a discretized generalization
 	To build an intuition for graph signals, this detail can however be ignored.
 }.
 Both, real-valued functions and graph signals, can be described as vectors in their time and vertex base respectively:
-\begin{equation}
+\begin{equation*}
 	\begin{split}
 		f = \int_{\mathbb{R}} f(t) b_t dt
 		\Rightarrow \langle b_t, f \rangle = f(t)
@@ -50,7 +50,7 @@ Both, real-valued functions and graph signals, can be described as vectors in th
 		x = \sum_{i = 1}^{N} x_i b_i
 		\Rightarrow \langle b_i, x \rangle = x_i
 	\end{split}
-\end{equation}
+\end{equation*}
 In this equation ${\{ b_i \}}_{v_i \in \mathcal{V}}$ denotes the standard basis of the adjacency matrix $W$, i.e.\ $b_i \in \mathbb{R}^N$ has a signal strength of $0$ for all $v_{j \neq i}$ and a signal strength of $1$ for $v_i$.
 Similarly ${\{ b_t \}}_{t \in \mathbb{R}}$ denotes the infinite dimensional standard basis of the space of real functions, where $\langle b_t, \cdot \rangle := \delta_t(\cdot)$, with $\delta$ denoting the Dirac delta function.
 
@@ -59,14 +59,14 @@ Similarly ${\{ b_t \}}_{t \in \mathbb{R}}$ denotes the infinite dimensional stan
 
 As mentioned at the beginning of this section, the core idea of spectral graph theory is to express graph signal vectors $x$ in the spectral basis ${\{ u_i \}}_{i = 1}^{N}$ instead of the standard vertex basis ${\{ b_i \}}_{v_i \in \mathcal{V}}$.
 This idea is analogous to the classical Fourier transform on real-valued functions.
-In the first step we are now going to give an intuition for the classical Fourier transform.
+In the first step we are going to give an intuition for the classical Fourier transform.
 Afterwards we will extend this intuition to the graph domain.
 
 The Fourier basis ${\{ u_\xi \}}_{\xi \in \mathbb{R}}$ describes a function $f$ not in terms of the values $f(t) = \langle b_t, f \rangle$ it takes at position $t$ but instead in terms of the amplitudes $\hat{f}(\xi) = \langle u_\xi, f \rangle$ of the complex exponentials $u_\xi(t) = e^{2\pi i \xi t}$.
 Using this perspective, the Fourier transform can be viewed as a change of basis operator from the orthonormal standard basis ${\{ b_t \}}_{t \in \mathbb{R}}$ to the also orthonormal Fourier basis ${\{ u_\xi \}}_{\xi \in \mathbb{R}}$:
-\begin{align}
+\begin{align*}
 	f = \int_{\mathbb{R}} \underbrace{\langle b_t, f \rangle}_{f(t)} b_t dt\quad=\quad\int_{\mathbb{R}} \underbrace{\langle u_\xi, f \rangle}_{\hat{f}(\xi)} u_\xi d\xi
-\end{align}
+\end{align*}
 This property of the Fourier transform by itself is not special; in fact there are infinitely many orthonormal bases on the space of real-valued functions.
 The distinguishing property of ${\{ u_\xi \}}_{\xi \in \mathbb{R}}$, making it useful in many domains, is that it is an \textit{eigenbasis} of the \textit{Laplacian} $\Updelta$, i.e.\  $\Updelta u_\xi = \lambda_\xi u_\xi$ for the eigenvalue $\lambda_\xi \in \mathbb{R}$.
 The Laplacian is a multi\-dimensional generalization of the second derivative.
@@ -92,19 +92,19 @@ This Fourier basis again is characterized by it being an eigenbasis of the Lapla
 \end{align}
 Using this definition, the application $L x$ is a discrete generalized analogue of the second derivative $\frac{\partial^2}{\partial t^2} f$.
 Putting both Laplacian variants, $\frac{\partial^2}{\partial t^2}$ and $L$, side-by-side gives an intuition for why this is the case:
-\begin{equation}
+\begin{equation*}
 	\begin{split}
 		\left(-\frac{\partial^2}{\partial t^2} f\right)\mkern-4mu(t) = \lim_{h \to 0} \frac{1}{h^2} (\underbrace{f(t) - f(t-h)}_{\Delta_{t, t-h}} + \underbrace{f(t) -  f(t+h)}_{\Delta_{t, t+h}})
 	\end{split}
 	\begin{split}\ \left|\ %
 		{(L x)}_i = \sum_{j = 1}^{N} w_{i j} \underbrace{(x_i - x_j)}_{\Delta_{i, j}}
 	\right.\end{split}
-\end{equation}
-The second derivative of a function $f$ essentially just averages the differences in signal strength in the neighborhood of a point $t$.
+\end{equation*}
+The second derivative of a function $f$ essentially averages the differences in signal strength in the neighborhood of a point $t$.
 For real-valued functions this neighborhood only consists of the two infinitesimally close points to the left and to the right of $t$, i.e.\ $t - h$ and $t + h$.
 The graph Laplacian represents the same operation, where each point/vertex might however have more than two neighbors that need to be averaged.
 
-Based on the graph Laplacian $L$ we just defined, the graph Fourier basis ${\{ u_k \}}_{k = 1}^{N}$ is just the set of eigenvectors of $L$.
+Based on the graph Laplacian $L$ we just defined, the graph Fourier basis ${\{ u_k \}}_{k = 1}^{N}$ is the set of eigenvectors of $L$.
 In the rest of this paper we will assume that these eigenvectors $u_k$ are sorted in ascending order w.r.t.\  their eigenvalues $\lambda_k$, i.e.\  $\lambda_1 \leq \lambda_2 \leq \cdots \leq \lambda_N$.
 \Cref{fig:sgt:graphFourier} shows how this definition generalizes the Fourier basis from the real number line to an arbitrary graph.
 It also shows that the eigenvalues $\lambda_k$ of the graph Fourier basis encode some notion of frequency, just like they do for the classical Fourier basis.
@@ -122,7 +122,7 @@ Analogous to the classical Fourier transform, the eigenvalues of a graph's Lapla
 \subsection{Spectral Properties of Graphs}%
 \label{sec:sgt:spectrum}
 
-We will now give an intuition for the relation between the spectrum of a graph and its structural properties\footnote{%
+Next we will give an intuition for the relation between the spectrum of a graph and its structural properties\footnote{%
 	Only a general overview will be given. For a more detailed discussion we refer to \citet{Shuman2013}.
 }.
 For any graph the smallest eigenvalue always is $\lambda_1 = 0$ with the associated eigenvector $u_1 = \frac{1}{\sqrt{N}} {(1, \dots, 1)}^\top$ being a uniform signal over all vertices.
@@ -143,7 +143,7 @@ vertices with a positive signal strength in $u_2$ are in $\mathcal{V}_+$, the ot
 The so called \textit{spectral clustering} algorithm is based on this relationship.
 \Cref{fig:sgt:graphFourier} shows how the Fiedler vector $u_2$ partitions a graph via the signs of the vertex signal strengths.
 
-As we have just seen, expressing a graph $G$ in terms of the spectrum of its Laplacian $L$ gives access to graph characteristics like its overall connectivity.
+To summarize, expressing a graph $G$ in terms of the spectrum of its Laplacian $L$ gives access to graph characteristics like its overall connectivity.
 Similarly to how the low-frequency components of the Fourier transform of a function represent the overall shape of that function, the eigenvectors associated with the small eigenvalues of $L$ represent overall characteristics of $G$.
 The details of a function or graph on the other hand are encoded in the high-frequency components of its Fourier transform, i.e.\  the eigenvectors associated with large eigenvalues.
 This perspective already hints at how spectral graph analysis might be useful to approximate graphs.

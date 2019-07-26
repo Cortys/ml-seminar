@@ -4,7 +4,7 @@
 \section{Graph Coarsening}%
 \label{sec:coarse}
 
-We will now see how the size of a graph $G$ can be reduced via \textit{graph coarsening}.
+Next we will see how the size of a graph $G$ can be reduced via \textit{graph coarsening}.
 The resulting coarsened graph $G_c$ should ideally be structurally similar to $G$, i.e.\  it should have a similar spectrum.
 In this section we will first define the class of coarsening operators $C$ and give an intuition on how they change the shape of a graph.
 Then we will describe a randomized algorithm to compute such a coarsening.
@@ -38,8 +38,8 @@ To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \m
 \end{figure}
 
 In the last section we saw how graphs can be described via their Laplacian $L$.
-Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will now describe a coarsening $\varphi$ as an operation that acts directly on $L$.
-The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially just a matrix representing $\varphi$:
+Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will describe a coarsening $\varphi$ as an operation that acts directly on $L$.
+The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially a matrix representing $\varphi$:
 \begin{align}
 	\varphi(v_i) = v'_j \Leftrightarrow C b_i = n_j b'_j\quad
 	& \text{with the standard basis vectors } b_i \in \mathbb{R}^N,\, b'_j \in \mathbb{R}^n\\
@@ -55,14 +55,14 @@ By linearity any signal $x \in \mathbb{R}^N$ on $G$ can thus be downsampled to a
 the signal strengths of merged vertices will simply be added up.
 Similarly a downsampled signal $x_c$ can be upsampled again to an approximation $\widetilde{x} \in \mathbb{R}^N$ of the original signal $x$.
 Upsampling uniformly distributes the signal strength of each $v'_j \in \mathcal{V}_c$ among $\varphi^{-1}(v'_i)$, where the inverse $\varphi^{-1}$ can be represented by $C^{\top}$:
-\begin{align}
+\begin{align*}
 	\widetilde{x} := C^{\top} x_c = C^{\top} C x = \Pi x\quad\text{with the projector } \Pi := C^{\top} C
-\end{align}
+\end{align*}
 
 Since both the coarsening matrix $C$ and the Laplacian $L$ are operators acting on signals, we can combine them to define the \textit{coarsened Laplacian} $L_c$ and also the \textit{approximate Laplacian} $\widetilde{L}$:
-\begin{align}
+\begin{align*}
 	L_c := C L C^{\top}\quad\text{and}\quad\widetilde{L} := C^{\top} L_c C = \Pi L \Pi
-\end{align}
+\end{align*}
 $L_c$ represents the Laplacian of the coarsened graph $G_c$\footnote{%
 	$L_c$ is actually not a proper combinatorial Laplacian, i.e.\  its rows do not generally add up to $0$.
 	To fix this, $L_c$ could be normalized, which is however not necessary for our analysis.

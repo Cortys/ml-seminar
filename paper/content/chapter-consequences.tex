@@ -5,7 +5,7 @@
 \label{sec:cons}
 
 We have just seen how to compute a coarsened graph $G_c$ via the REC algorithm.
-What remains to be answered now is how coarsening affects the performance of graph algorithms when $G_c$ is used as a proxy for the original graph $G$.
+What remains to be answered is how coarsening affects the performance of graph algorithms when $G_c$ is used as a proxy for the original graph $G$.
 In the first step we will present a graph similarity measure.
 Using this measure we will then put bounds on the dissimilarity of $G$ and $G_c$.
 Finally we will use those bounds to analyze the influence of coarsening on the performance of the \textit{spectral clustering algorithm}.
@@ -30,12 +30,12 @@ We say $\widetilde{L}$ is an \textit{$\varepsilon$-approximation} of $L$ iff.\  
 \begin{align}
 	\forall k \leq K:\ (1 - \varepsilon) \underbrace{u_k^{\top} L u_k}_{\lambda_k} \leq u_k^{\top} \widetilde{L} u_k \leq (1 + \varepsilon) \underbrace{u_k^{\top} L u_k}_{\lambda_k} \text{ with } \varepsilon \geq 0\label{eq:cons:rss}
 \end{align}
-The reason we require \cref{eq:cons:rss} to hold only for the first $K$ eigenvectors of $L$ is, that $\text{rank}(L) = N - c$, whereas $\text{rank}(\widetilde{L}) = n - c$;
+The reason \cref{eq:cons:rss} is only quantified for the first $K$ eigenvectors of $L$ is, that $\text{rank}(L) = N - c > n - c = \text{rank}(\widetilde{L})$;
 i.e.\ $\widetilde{L}$ has a higher dimensional null space\footnote{%
 	Here $c$ denotes the number of connected components of $G$.
 	They reduce the rank since $\lambda_1 = \cdots = \lambda_c = 0$.
 }.
-Thus \cref{eq:cons:rss} cannot hold for a signal $x$ that is in the null space of $\widetilde{L}$ but not in that of $L$.
+Thus the inequality in \cref{eq:cons:rss} cannot hold for a signal $x$ that is in the null space of $\widetilde{L}$ but not in that of $L$.
 Therefore the similarity condition is restricted to the first $K$ eigenvectors, as they represent the most important ``low-frequency'' components of $G$.
 This restricted condition is called \textit{restricted spectral similarity} (RSS).
 
@@ -114,7 +114,7 @@ Here we will instead give an intuition for its key statements:
 \subsection{Implications for Spectral Clustering}%
 \label{sec:cons:sc}
 
-Lastly we will now evaluate the effect coarsening has on the performance of the \textit{spectral clustering algorithm}~\cite{Luxburg2007}.
+Lastly we will evaluate the effect coarsening has on the performance of the \textit{spectral clustering algorithm}~\cite{Luxburg2007}.
 As we have seen in \cref{sec:sgt:spectrum}, the positive and negative vertex signal strengths of the Fiedler vector $u_2$ describe a $2$-clustering of the graph $G$ where the cluster boundary can be interpreted as a heat-flow bottleneck.
 This idea can be extended to the $K$-clustering scenario by considering the first $K$ eigenvectors $U_K = \{ u_2, \dots, u_K \}$ instead of only looking at $u_2$.
 To obtain a vertex clustering, the vertex basis vectors ${\{ b_i \}}_{v_i \in \mathcal{V}}$ are projected onto the spectral basis $U_K$, i.e.\ the Fourier transform $\widehat{b}_i = {(\langle u_2, b_i \rangle, \dots, \langle u_K, b_i \rangle)}^\top$ is computed for each vertex.
@@ -163,4 +163,4 @@ Most notably this implies that the absolute clustering error introduced by coars
 		\source{Loukas2018}
 	}\label{fig:cons:mnist}
 \end{figure}
-\vspace{-0.7cm}
+% \vspace{-0.7cm}
