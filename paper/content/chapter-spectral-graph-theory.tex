@@ -54,6 +54,7 @@ Both, real-valued functions and graph signals, can be described as vectors in th
 In this equation ${\{ b_i \}}_{v_i \in \mathcal{V}}$ denotes the standard basis of the adjacency matrix $W$, i.e.\ $b_i \in \mathbb{R}^N$ has a signal strength of $0$ for all $v_{j \neq i}$ and a signal strength of $1$ for $v_i$.
 Similarly ${\{ b_t \}}_{t \in \mathbb{R}}$ denotes the infinite dimensional standard basis of the space of real functions, where $\langle b_t, \cdot \rangle := \delta_t(\cdot)$, with $\delta$ denoting the Dirac delta function.
 
+\vspace{-1em}%
 \subsection{Extending the Fourier Transform to Graphs}%
 \label{sec:sgt:fourier}
 
@@ -127,7 +128,7 @@ Next we will give an intuition for the relation between the spectrum of a graph 
 }.
 For any graph the smallest eigenvalue always is $\lambda_1 = 0$ with the associated eigenvector $u_1 = \frac{1}{\sqrt{N}} {(1, \dots, 1)}^\top$ being a uniform signal over all vertices.
 Using the heat analogy, this simply means that any system in which everything has the same temperature is in an equilibrium state and no heat is flowing.
-More generally for graphs with $m$ separate connected components the first $m$ eigenvalues are all $0$ since each component can have its own equilibrium temperature without causing heat flow.
+More generally for graphs with $c$ separate connected components the first $c$ eigenvalues are all $0$ since each component can have its own equilibrium temperature without causing heat flow.
 If the spectrum of a graph is known, this fact can be used to quickly determine whether a graph is connected or not.
 
 Another meaningful eigenvalue is $\lambda_2$ and its eigenvector $u_2$, also called the \textit{Fiedler value} and \textit{Fiedler vector} respectively.

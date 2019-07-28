@@ -1,8 +1,10 @@
 % !TEX root = ../main.tex
 % chktex-file 21
 % chktex-file 46
+\vspace{-0.5em}%
 \section{Graph Coarsening}%
 \label{sec:coarse}
+\vspace{-0.5em}%
 
 Next we will see how the size of a graph $G$ can be reduced via \textit{graph coarsening}.
 The resulting coarsened graph $G_c$ should ideally be structurally similar to $G$, i.e.\  it should have a similar spectrum.
@@ -38,7 +40,7 @@ To reverse the coarsening mapping, we define $\varphi^{-1}: \mathcal{V}_c \to \m
 \end{figure}
 
 In the last section we saw how graphs can be described via their Laplacian $L$.
-Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will describe a coarsening $\varphi$ as an operation that acts directly on $L$.
+Since our goal is to analyze the effects of coarsening on the overall characteristics of a graph, we will describe a coarsening $\varphi$ as an operation that acts directly on $L$ in the rest of this paper.
 The so called \textit{coarsening matrix} $C \in \mathbb{R}^{n \times N}$ is essentially a matrix representing $\varphi$:
 \begin{align}
 	\varphi(v_i) = v'_j \Leftrightarrow C b_i = n_j b'_j\quad
@@ -73,8 +75,10 @@ During re-expansion, every vertex $v'_i \in \mathcal{V}_c$ is replaced by the co
 The neighbors of each replaced $v'_i$ are connected to the vertices that replace it.
 \Cref{fig:coarse:example:reexpanded} shows how a graph might look like after such a re-expansion.
 
+\vspace{-0.5em}%
 \subsection{The Randomized Edge Contraction Algorithm}%
 \label{sec:coarse:rec}
+\vspace{-0.5em}%
 
 Now that we have defined the coarsening operator, we will look at a simple randomized algorithm which finds a coarsened graph $G_c$ that is spectrally similar to some given graph $G$.
 The so called \textit{Randomized Edge Contraction}~(REC)~\cite{Loukas2018} algorithm is a variant of the well-known greedy algorithm for maximal matching generation.
